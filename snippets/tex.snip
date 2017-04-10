@@ -1,0 +1,40 @@
+snippet \sum
+abbr    Σ
+alias   sum \sum{
+    \sum_{${1}}^{${2}}${0}
+
+
+snippet \int
+abbr    ∫
+alias   int \int{
+    \int_{${1}}^{${2}}${0}
+
+
+snippet ints
+abbr    []_{}^{}
+    [${1}]_{${2}}^{${3}}${0}
+
+
+snippet \lim
+abbr    limit
+alias   lim \lim{
+    \lim_{${1} \to ${2}}${0}
+
+
+snippet \sqrt
+abbr    √
+alias   sqrt
+    \sqrt{${1}}${0}
+
+
+snippet array
+abbr    pmatrix
+    \left(
+	\begin{array}{${1}}
+	${2:TARGET}
+	\end{array}
+	\right)
+
+snippet equal
+abbr    &=&
+    &=&

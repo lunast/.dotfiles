@@ -1,0 +1,161 @@
+snippet im
+abbr implicit none
+    implicit none
+
+snippet inter
+abbr interface
+    interface
+		${0}
+	end interface
+
+snippet sua
+abbr subroutine
+options head
+	subroutine ${1:`expand('%:r')`}(${2})
+		${3}
+	end subroutine $1
+
+snippet su
+abbr subroutine
+options head
+	subroutine ${1:`expand('%:r')`}
+		${2}
+	end subroutine $1
+
+snippet mo
+abbr module
+options head
+	module ${1:`expand('%:r')`}
+		${2}
+	end module $1
+
+snippet mocon
+abbr module
+options head
+	module ${1:`expand('%:r')`}
+		implicit none
+	contains
+		${2}
+	end module $1
+
+snippet mouse
+abbr module
+options head
+	module ${1:`expand('%:r')`}
+		use ${2}
+		implicit none
+	contains
+		${3}
+	end module $1
+
+snippet fu
+abbr function
+options head
+	function ${1:}(${2}) result(${3})
+		${4}
+	end function $1
+
+snippet wrno
+abbr write(*, '(a)', advance = 'no')
+    write(*, '(a)', advance = 'no') '${0}'
+
+snippet ina
+abbr integer, allocatable
+options head
+    integer, allocatable :: 
+
+snippet double
+abbr double precision
+options head
+    double precision :: 
+
+snippet doublei
+abbr double precision, intent(in)
+options head
+    double precision, intent(in) :: 
+
+snippet doubleo
+abbr double precision, intent(out)
+options head
+    double precision, intent(out) :: 
+
+snippet doublea
+abbr double precision, allocatable
+options head
+    double precision, allocatable :: 
+
+snippet doublep
+abbr double precision, parameter
+options head
+    double precision, parameter :: 
+
+snippet doubled
+abbr double precision, dimension() ::
+options head
+    double precision, dimension(${1:size}) :: ${0}
+
+snippet doubleai
+abbr double precision, allocatable
+options head
+    double precision, allocatable, intent(in) :: 
+
+snippet doubleao
+abbr double precision, allocatable
+options head
+    double precision, allocatable, intent(out) :: 
+
+snippet com
+abbr complex(kind(0d0))
+options head
+    complex(kind(0d0)) :: 
+
+snippet comp
+abbr complex(kind(0d0))
+options head
+    complex(kind(0d0)), parameter :: 
+
+snippet comd
+abbr complex(kind(0d0)), dimension() ::
+options head
+    complex(kind(0d0)), dimension(${1:size}) :: ${0}
+
+snippet comi
+abbr complex(kind(0d0)), intent(in)
+options head
+    complex(kind(0d0)), intent(in) :: 
+
+snippet como
+abbr complex(kind(0d0)), intent(out)
+options head
+    complex(kind(0d0)), intent(out) :: 
+
+snippet coma
+abbr complex(kind(0d0)), allocatable
+options head
+    complex(kind(0d0)), allocatable :: 
+
+snippet comai
+abbr complex(kind(0d0)), allocatable, intent(in)
+options head
+    complex(kind(0d0)), allocatable, intent(in) :: 
+
+snippet comao
+abbr complex(kind(0d0)), allocatable, intent(out)
+options head
+    complex(kind(0d0), allocatable, intent(out) :: 
+
+snippet cha
+abbr character(:), allocatable
+options head
+    character(:), allocatable :: 
+
+snippet chi
+abbr character(*), intent(in)
+options head
+    character(*), intent(in) :: 
+
+snippet allocate
+abbr allocate(...) ... deallocate(...)
+    allocate(${1})
+	${3:TARGET}
+	deallocate(${2})
