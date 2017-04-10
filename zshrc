@@ -89,5 +89,4 @@ precmd() {
 # Other Settings
 # ------------------------------
 alias history='history -E'
-alias vigenere='python ~/Dropbox/program/python/vigenere.py'
-alias tetris=bastet
+alias vigenere='python ~/dotfiles/python/vigenere.py'
