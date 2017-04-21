@@ -164,9 +164,8 @@ nnoremap <silent><space>O  :<C-u>for i in range(v:count1) \| call append(line('.
 "Encode
 set encoding=UTF-8 "文字コードをUTF-8にする
 set termencoding=UTF-8 "文字コードをUTF-8にする
-
-"保存時にutf-8に変換
-set fileencoding=UTF-8
+set fileencodings=iso-2022-jp,euc-jp,cp932,UTF-8
+set fileformats=unix,dos,mac
 
 "fortran90用の設定
 let fortran_free_source=1
@@ -247,7 +246,7 @@ vmap gx <Plug>(openbrowser-smart-search)
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-let g:neosnippet#snippets_directory='~/Dropbox/vim/snippets/'
+let g:neosnippet#snippets_directory='~/dotfiles/snippets/'
 nnoremap <silent><space>, :NeoSnippetEdit<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
