@@ -162,9 +162,8 @@ nnoremap <silent><space>o  :<C-u>for i in range(v:count1) \| call append(line('.
 nnoremap <silent><space>O  :<C-u>for i in range(v:count1) \| call append(line('.')-1, '') \| endfor<CR>
 
 "Encode
-set encoding=UTF-8 "文字コードをUTF-8にする
-set termencoding=UTF-8 "文字コードをUTF-8にする
-set fileencodings=iso-2022-jp,euc-jp,cp932,UTF-8
+set encoding=UTF-8
+set fileencodings=UTF-8,cp932,euc-jp,iso-2022-jp
 set fileformats=unix,dos,mac
 
 "fortran90用の設定
