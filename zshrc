@@ -89,4 +89,4 @@ precmd() {
 # Other Settings
 # ------------------------------
 alias history='history -E'
-alias vigenere='python ~/dotfiles/python/vigenere.py'
+alias vigenere='python2 ~/dotfiles/python/vigenere.py'
