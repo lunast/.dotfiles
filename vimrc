@@ -52,9 +52,16 @@ endif
 
 """"""""""""""注意""""""""""""""""""""""""""""""
 "migemo検索を利用するためにcmigemoが必要
+"Ubuntuなら
 "sudo apt-get install cmigemo
+"Archなら
+"AURからnkfとcmigemo-gitをダウンロードしてmakepkg
+
 "vimfiilerでゴミ箱を利用するためにtrashcliが必要
+"Ubuntuなら
 "sudo apt-get install trash-cli
+"Archなら
+"sudo pacman -S trash-cli
 """"""""""""""""""""""""""""""""""""""""""""""""
 
 "カラースキームの設定
@@ -70,6 +77,9 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+
+"全角記号を重ならせない
+set ambiwidth=double
 
 "コマンド履歴の設定
 set history=200
@@ -106,7 +116,7 @@ set smartindent
 set splitbelow
 set splitright
 
-"バッグスペースの範囲を拡張
+"バックスペースの範囲を拡張
 set backspace=indent,eol,start
 
 "変更のあったファイルを自動でリロード
@@ -455,6 +465,9 @@ function! s:Go()
   endif
   if e == "py"
     call vimshell#interactive#send("python\ ".expand("%:p"))
+  endif
+  if e == "lua"
+    call vimshell#interactive#send("lua\ ".expand("%:p"))
   endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
