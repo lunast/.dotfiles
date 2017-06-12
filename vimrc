@@ -78,9 +78,6 @@ set hlsearch
 set ignorecase
 set smartcase
 
-"全角記号を重ならせない
-set ambiwidth=double
-
 "コマンド履歴の設定
 set history=200
 
@@ -446,6 +443,9 @@ function! s:Compile()
   if e == "c"
     call vimshell#interactive#send("gcc\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out\ -lm")
   endif
+  if e == "cpp"
+    call vimshell#interactive#send("g++\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out\ -lm")
+  endif
   if e == "f90" || e == "f95"
     call vimshell#interactive#send("gfortran\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out")
   endif
@@ -460,7 +460,7 @@ command! Go call s:Go()
 nnoremap <silent> <F3> :Go<CR>
 function! s:Go()
   let e = expand("%:e")
-  if e == "c" || e == "f" || e == "f90" || e == "f95"
+  if e == "c" || e == 'cpp' || e == "f" || e == "f90" || e == "f95"
     call vimshell#interactive#send(expand("%:p:r").".out")
   endif
   if e == "py"
