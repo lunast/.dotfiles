@@ -390,10 +390,14 @@ function! s:vimfiler_my_settings()
     nmap <buffer> <S-l> <C-w>l
 endfunction
 
+"VimFilerでリモートのファイルをIDE風に開くためのコマンド
 command! -nargs=1 SshFilerTree call SshFilerTree(<f-args>)
 function! SshFilerTree(host)
-  let l:vimfiler_options = '-split -simple -winwidth=30 -create -no-quit -buffer-name=tree ssh://'.a:host.'/'
-  :execute ':VimFiler '.l:vimfiler_options
+  if bufnr('vimfiler:tree') != -1
+    execute ':bw vimfiler:tree'
+  endif
+  let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=tree ssh://'.a:host.'/'
+  execute ':VimFiler '.l:vimfiler_options
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -437,7 +441,7 @@ let g:vimshell_enable_start_insert = 0
 command! Change call s:Change()
 nnoremap <silent> <F4> :Change<CR>
 function! s:Change()
-  call vimshell#interactive#send("cd\ ".expand("%:p:h"))
+  call vimshell#interactive#send('cd '.expand("%:p:h"))
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -447,16 +451,16 @@ nnoremap <silent> <F2> :Compile<CR>
 function! s:Compile()
   let e = expand("%:e")
   if e == "c"
-    call vimshell#interactive#send("gcc\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out\ -lm")
+    call vimshell#interactive#send('gcc '.expand("%:p").' -o '.expand("%:p:r").'.out -lm')
   endif
   if e == "cc" || e == "cpp"
-    call vimshell#interactive#send("g++\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out")
+    call vimshell#interactive#send('g++ '.expand("%:p").' -o '.expand("%:p:r").'.out')
   endif
   if e == "f90" || e == "f95"
-    call vimshell#interactive#send("gfortran\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out")
+    call vimshell#interactive#send('gfortran '.expand("%:p").' -o '.expand("%:p:r").'.out')
   endif
   if e == "tex"
-    call vimshell#interactive#send("latexmk\ ".expand("%:p"))
+    call vimshell#interactive#send('latexmk '.expand("%:p"))
   endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -467,13 +471,13 @@ nnoremap <silent> <F3> :Go<CR>
 function! s:Go()
   let e = expand("%:e")
   if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
-    call vimshell#interactive#send(expand("%:p:r").".out")
+    call vimshell#interactive#send(expand("%:p:r").'.out')
   endif
   if e == "py"
-    call vimshell#interactive#send("python\ ".expand("%:p"))
+    call vimshell#interactive#send('python '.expand("%:p"))
   endif
   if e == "lua"
-    call vimshell#interactive#send("lua\ ".expand("%:p"))
+    call vimshell#interactive#send('lua '.expand("%:p"))
   endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
