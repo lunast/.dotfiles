@@ -25,6 +25,7 @@ call dein#add('tpope/vim-surround')
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/neoyank.vim')
+call dein#add('Shougo/neossh.vim')
 call dein#add('Shougo/vimfiler')
 call dein#add('LeafCage/yankround.vim')
 call dein#add('itchyny/lightline.vim')
@@ -77,9 +78,6 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-
-"全角記号を重ならせない
-set ambiwidth=double
 
 "コマンド履歴の設定
 set history=200
@@ -143,7 +141,7 @@ inoremap jk <Esc>
 inoremap ｊｋ <Esc>
 inoremap <C-l> <Right>
 nnoremap gs  :<C-u>%s///g<Left><Left><Left>
-vnoremap gs  :s///g<Left><Left><Left>
+vnoremap gs  :<C-u>s///g<Left><Left><Left>
 onoremap ap  a)
 onoremap ip  i)
 onoremap aa  a>
@@ -164,8 +162,9 @@ nnoremap <S-j> <C-w>j
 nnoremap <S-k> <C-w>k
 nnoremap <S-h> <C-w>h
 nnoremap <S-l> <C-w>l
-nnoremap <silent><space>c :only<CR>
+nnoremap <silent><space>c :<C-u>only<CR>
 nnoremap <silent><space>. :<C-u>edit $MYVIMRC<CR>
+nnoremap <silent><Esc><Esc> :<C-u>noh<CR>
 
 "ノーマルモードのまま空行を挿入
 nnoremap <silent><space>o  :<C-u>for i in range(v:count1) \| call append(line('.'), '') \| endfor<CR>
@@ -199,9 +198,9 @@ nmap <space>d :StripWhitespace<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""fugitiveの設定""""""""""""""""""""""""
-nmap <space>gs :Gstatus<CR>
-nmap <space>gw :Gwrite<CR>
-nmap <space>gr :Gread<CR>
+nmap <silent><space>gs :<C-u>Gstatus<CR>
+nmap <silent><space>gw :<C-u>Gwrite<CR>
+nmap <silent><space>gr :<C-u>Gread<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""easymotionの設定""""""""""""""""""""""
@@ -256,7 +255,7 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/dotfiles/snippets/'
-nnoremap <silent><space>, :NeoSnippetEdit<CR>
+nnoremap <silent><space>, :<C-u>NeoSnippetEdit<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""単語補完(neocomplete)"""""""""""""""""""""""""""""
@@ -309,7 +308,7 @@ let g:lightline = {
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
       \ }
 function! LightLineMode()
-return  &ft == 'unite' ? 'Unite' :
+return  &ft == 'unite' ? 'unite' :
       \ &ft == 'vimfiler' ? 'vimfiler' :
       \ &ft == 'vimshell' ? 'vimshell' :
       \ lightline#mode()
@@ -359,7 +358,7 @@ endfunction
 let g:syntastic_mode_map = { 'mode': 'passive' }
 augroup AutoSyntastic
   autocmd!
-  autocmd BufWritePost *.c,*.cpp,*.f,*.f90,*.py,*.sh, call s:syntastic()
+  autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.sh, call s:syntastic()
 augroup END
 function! s:syntastic()
   SyntasticCheck
@@ -382,13 +381,19 @@ let g:vimfiler_force_overwrite_statusline=0
 "現在開いているバッファのディレクトリを開く
 nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 "vimfilerをIDE風に開く
-nnoremap <silent> <C-e> :VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
+nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
 "デフォルトのキーマッピングを変更
 augroup vimrc
     autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
     nmap <buffer> <S-l> <C-w>l
+endfunction
+
+command! -nargs=1 SshFilerTree call SshFilerTree(<f-args>)
+function! SshFilerTree(host)
+  let l:vimfiler_options = '-split -simple -winwidth=30 -create -no-quit -buffer-name=tree ssh://'.a:host.'/'
+  :execute ':VimFiler '.l:vimfiler_options
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -407,11 +412,9 @@ vmap <Enter> <Plug>(EasyAlign)
 
 """"""""""""""""im_control.vim""""""""""""""""""""""""""
 " fcitx
-" 「日本語入力固定モード」の動作設定
 let IM_CtrlMode = 6
 " 「日本語入力固定モード」切替キー
 inoremap <silent> <C-j> <C-r>=IMState('FixMode')<CR>
-" <ESC>押下後のIM切替開始までの反応が遅い場合はttimeoutlenを短く設定してみてください(ミリ秒)
 set timeout timeoutlen=3000 ttimeoutlen=100
 "ファイルがunite,vimshell,vimfilerの場合、日本語入力固定モードを個別制御
 au FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocalMode = 1
@@ -419,9 +422,9 @@ au FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocalMode = 1
 
 """"""""""""""""VimShellの設定""""""""""""""""""""""
 "VimShellを開く
-nnoremap <silent><space>t :VimShell -buffer-name=terminal -toggle<CR>
+nnoremap <silent><space>t :<C-u>VimShell -buffer-name=terminal -toggle<CR>
 "PopupでVimShellを開く
-nnoremap <silent><space>s :VimShellPop -buffer-name=terminal<CR>
+nnoremap <silent><space>s :<C-u>VimShellPop -buffer-name=terminal<CR>
 "動的プロンプトを適用
 let g:vimshell_prompt_expr =
 \ 'escape(fnamemodify(getcwd(), ":~")."$", "\\[]()?! ")." "'
@@ -446,6 +449,9 @@ function! s:Compile()
   if e == "c"
     call vimshell#interactive#send("gcc\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out\ -lm")
   endif
+  if e == "cc" || e == "cpp"
+    call vimshell#interactive#send("g++\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out")
+  endif
   if e == "f90" || e == "f95"
     call vimshell#interactive#send("gfortran\ ".expand("%:p")."\ -o\ ".expand("%:p:r").".out")
   endif
@@ -460,7 +466,7 @@ command! Go call s:Go()
 nnoremap <silent> <F3> :Go<CR>
 function! s:Go()
   let e = expand("%:e")
-  if e == "c" || e == "f" || e == "f90" || e == "f95"
+  if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
     call vimshell#interactive#send(expand("%:p:r").".out")
   endif
   if e == "py"
