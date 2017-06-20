@@ -179,7 +179,6 @@ set fileformats=unix,dos,mac
 let fortran_free_source=1
 let fortran_fold=1
 au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
-au  BufRead,BufWritePost *.f90 :cd %:p:h
 
 "tex用の設定
 let g:tex_flavor = "latex"
