@@ -31,6 +31,7 @@ call dein#add('LeafCage/yankround.vim')
 call dein#add('itchyny/lightline.vim')
 call dein#add('t9md/vim-textmanip')
 call dein#add('Lokaltog/vim-easymotion')
+call dein#add('rhysd/clever-f.vim')
 call dein#add('haya14busa/incsearch.vim')
 call dein#add('junegunn/vim-easy-align')
 call dein#add('Shougo/vimshell')
@@ -40,6 +41,8 @@ call dein#add('haya14busa/incsearch-migemo.vim')
 call dein#add('tpope/vim-fugitive')
 call dein#add('scrooloose/syntastic.git')
 call dein#add('ntpeters/vim-better-whitespace')
+call dein#add('mattn/emmet-vim')
+call dein#add('hail2u/vim-css3-syntax')
 call dein#add('Yggdroot/indentLine', {'on_path' : '.*'})
 call dein#add('cohama/lexima.vim', {'on_i': 1})
 call dein#add('Shougo/neocomplete.vim', {'on_i': 1})
@@ -182,7 +185,7 @@ au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
 
 "tex用の設定
 let g:tex_flavor = "latex"
-au  BufRead,BufWritePost *.tex :cd %:p:h
+let g:tex_conceal = ''
 
 "前方検索と後方検索のキーバインドを一致させる
 noremap <expr> n <SID>search_forward_p() ? 'nzv' : 'Nzv'
@@ -211,14 +214,16 @@ vmap s <Plug>(easymotion-bd-f2)
 "ライン移動
 nmap <C-l> <Plug>(easymotion-overwin-line)
 vmap <C-l> <Plug>(easymotion-bd-jk)
-"fとtをeasymotionのキーで置き換え
-map f <Plug>(easymotion-fl)
-map t <Plug>(easymotion-tl)
-map F <Plug>(easymotion-Fl)
-map T <Plug>(easymotion-Tl)
 "easymotionでmigemo検索を可能に
 let g:EasyMotion_use_migemo = 1
 """""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""clever-fの設定""""""""""""""""""""""""
+let g:clever_f_smart_case=1
+let g:clever_f_use_migemo=1
+let g:clever_f_across_no_line=1
+let g:clever_f_fix_key_direction=1
+""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""incsearchの設定"""""""""""""""""""""""
 map / <Plug>(incsearch-forward)
@@ -247,6 +252,15 @@ let g:netrw_nogx = 1
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 """""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""emmet-vimの設定"""""""""""""""""""""""
+  let g:user_emmet_settings = {
+    \ 'variables':{
+    \ 'lang':"ja"
+    \},
+    \ 'indentation':'    '
+  \}
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""スニペットの設定"""""""""""""""""""""""""""""""""
 " Plugin key-mappings.
