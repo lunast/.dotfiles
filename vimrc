@@ -17,6 +17,7 @@ let &runtimepath = &runtimepath . "," . s:dein_repo_dir
 call dein#begin(s:dein_dir)
 """"""""プラグインを以下に記述""""""""""""""""""""""""""""""""
 call dein#add('Shougo/dein.vim')
+call dein#add('vim-jp/vimdoc-ja')
 call dein#add('Shougo/neosnippet')
 call dein#add('Shougo/neosnippet-snippets')
 call dein#add('tomtom/tcomment_vim')
@@ -67,6 +68,9 @@ endif
 "Archなら
 "sudo pacman -S trash-cli
 """"""""""""""""""""""""""""""""""""""""""""""""
+
+"vimのhelpを日本語で開く
+set helplang=ja,en
 
 "カラースキームの設定
 syntax on
@@ -182,6 +186,7 @@ set fileformats=unix,dos,mac
 let fortran_free_source=1
 let fortran_fold=1
 au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
+au! BufRead,BufWritePre *.f90 :cd %:p:h
 
 "tex用の設定
 let g:tex_flavor = "latex"
@@ -397,6 +402,7 @@ nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
 "デフォルトのキーマッピングを変更
 augroup vimrc
+  autocmd!
   autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
@@ -459,7 +465,9 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""句読点の変換を切り替えるtoggle""""""""""""""
-let g:toggle_conv_punc=0
+let g:toggle_conv_punc=1
+inoremap 、 ，
+inoremap 。 ．
 command! ToggleConvPunc call s:ToggleConvPunc()
 nnoremap <silent> <space>c :ToggleConvPunc<CR>
 function! s:ToggleConvPunc()
@@ -467,13 +475,14 @@ function! s:ToggleConvPunc()
     inoremap 、 ，
     inoremap 。 ．
     let g:toggle_conv_punc=1
+    echo 'Convert:ON'
   else
     inoremap 、 、
     inoremap 。 。
     let g:toggle_conv_punc=0
+    echo 'Convert:OFF'
   endif
 endfunction
-call s:ToggleConvPunc() "デフォルトは変換をON
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""コンパイルコマンド""""""""""""""""""
