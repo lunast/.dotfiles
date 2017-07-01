@@ -397,10 +397,10 @@ nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
 "デフォルトのキーマッピングを変更
 augroup vimrc
-    autocmd FileType vimfiler call s:vimfiler_my_settings()
+  autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
-    nmap <buffer> <S-l> <C-w>l
+  nmap <buffer> <S-l> <C-w>l
 endfunction
 
 "VimFilerでリモートのファイルをIDE風に開くためのコマンド
@@ -456,6 +456,24 @@ nnoremap <silent> <F4> :Change<CR>
 function! s:Change()
   call vimshell#interactive#send('cd '.expand("%:p:h"))
 endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""句読点の変換を切り替えるtoggle""""""""""""""
+let g:toggle_conv_punc=0
+command! ToggleConvPunc call s:ToggleConvPunc()
+nnoremap <silent> <space>c :ToggleConvPunc<CR>
+function! s:ToggleConvPunc()
+  if g:toggle_conv_punc == 0
+    inoremap 、 ，
+    inoremap 。 ．
+    let g:toggle_conv_punc=1
+  else
+    inoremap 、 、
+    inoremap 。 。
+    let g:toggle_conv_punc=0
+  endif
+endfunction
+call s:ToggleConvPunc() "デフォルトは変換をON
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""コンパイルコマンド""""""""""""""""""
