@@ -44,6 +44,7 @@ call dein#add('scrooloose/syntastic.git')
 call dein#add('ntpeters/vim-better-whitespace')
 call dein#add('mattn/emmet-vim')
 call dein#add('hail2u/vim-css3-syntax')
+call dein#add('lordm/vim-browser-reload-linux')
 call dein#add('Yggdroot/indentLine', {'on_path' : '.*'})
 call dein#add('cohama/lexima.vim', {'on_i': 1})
 call dein#add('Shougo/neocomplete.vim', {'on_i': 1})
@@ -55,7 +56,7 @@ if dein#check_install()
   call dein#install()
 endif
 
-""""""""""""""注意""""""""""""""""""""""""""""""
+""""""""""""""注意"""""""""""""""""""""""""""""""""
 "migemo検索を利用するためにcmigemoが必要
 "Ubuntuなら
 "sudo apt-get install cmigemo
@@ -67,7 +68,13 @@ endif
 "sudo apt-get install trash-cli
 "Archなら
 "sudo pacman -S trash-cli
-""""""""""""""""""""""""""""""""""""""""""""""""
+
+"browser-reload-linuxを利用するためにxdotoolが必要
+"Ubuntuなら
+"sudo apt-get install xdotool
+"Archなら
+"sudo pacman -S xdotool
+""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "vimのhelpを日本語で開く
 set helplang=ja,en
@@ -256,6 +263,12 @@ let g:tcomment_types['fortran'] = '! %s'
 let g:netrw_nogx = 1
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""browser-reload-linuxの設定""""""""""""""""""""
+command! Chr ChromeReload
+command! Chstart ChromeReloadStart
+command! Chstop ChromeReloadStop
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""emmet-vimの設定"""""""""""""""""""""""
