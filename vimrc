@@ -207,7 +207,8 @@ function! s:search_forward_p()
 endfunction
 
 """""""""""better-whitespaceの設定"""""""""""""""
-let g:better_whitespace_filetypes_blacklist=['vimshell', 'vimfiler', 'unite', 'neosnippet', 'help']
+let g:better_whitespace_filetypes_blacklist=
+    \['vimshell', 'vimfiler', 'unite', 'neosnippet', 'help']
 nmap <space>d :StripWhitespace<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -389,7 +390,7 @@ endfunction
 let g:syntastic_mode_map = { 'mode': 'passive' }
 augroup AutoSyntastic
     autocmd!
-    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.sh,*.html,*htm call s:syntastic()
+    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py, call s:syntastic()
 augroup END
 function! s:syntastic()
     SyntasticCheck
