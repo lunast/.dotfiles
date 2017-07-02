@@ -63,7 +63,7 @@ endif
 "Archなら
 "AURからnkfとcmigemo-gitをダウンロードしてmakepkg
 
-"vimfiilerでゴミ箱を利用するためにtrashcliが必要
+"vimfilerでゴミ箱を利用するためにtrashcliが必要
 "Ubuntuなら
 "sudo apt-get install trash-cli
 "Archなら
