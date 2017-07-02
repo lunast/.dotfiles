@@ -453,7 +453,7 @@ let IM_CtrlMode = 6
 inoremap <silent> <C-j> <C-r>=IMState('FixMode')<CR>
 set timeout timeoutlen=3000 ttimeoutlen=100
 "ファイルがunite,vimshell,vimfilerの場合、日本語入力固定モードを個別制御
-au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocalMode = 1
+au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocal=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""VimShellの設定""""""""""""""""""""""
