@@ -7,10 +7,10 @@ let s:dein_repo_dir = s:dein_github . '/' . s:dein_repo_name
 
 "deinがインストールされているかのチェック
 if !isdirectory(s:dein_repo_dir)
-  echo "dein is not installed, install now "
-  let s:dein_repo = "https://github.com/" . s:dein_repo_name
-  echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
-  call system("git clone " . s:dein_repo . " " . s:dein_repo_dir)
+    echo "dein is not installed, install now "
+    let s:dein_repo = "https://github.com/" . s:dein_repo_name
+    echo "git clone " . s:dein_repo . " " . s:dein_repo_dir
+    call system("git clone " . s:dein_repo . " " . s:dein_repo_dir)
 endif
 let &runtimepath = &runtimepath . "," . s:dein_repo_dir
 
@@ -53,7 +53,7 @@ call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 call dein#end()
 "プラグインのインストールを確認
 if dein#check_install()
-  call dein#install()
+    call dein#install()
 endif
 
 """"""""""""""注意"""""""""""""""""""""""""""""""""
@@ -139,35 +139,35 @@ augroup vimrc-checktime
 augroup END
 
 "キーバイド
-noremap <space>h  ^
-noremap <space>l  $
-noremap <space>p  %
-noremap k   gk
-noremap j   gj
-noremap gk  k
-noremap gj  j
-nnoremap <space>w  :<C-u>w<CR>
-nnoremap <space>q  :<C-u>q<CR>
-nnoremap <space>Q  :<C-u>q!<CR>
-nnoremap <space>/  *<C-o>
-nnoremap g<space>/  g*<C-o>
+noremap <space>h ^
+noremap <space>l $
+noremap <space>p %
+noremap k gk
+noremap j gj
+noremap gk k
+noremap gj j
+nnoremap <space>w :<C-u>w<CR>
+nnoremap <space>q :<C-u>q<CR>
+nnoremap <space>Q :<C-u>q!<CR>
+nnoremap <space>/ *<C-o>
+nnoremap g<space>/ g*<C-o>
 inoremap jk <Esc>
 inoremap ｊｋ <Esc>
 inoremap <C-l> <Right>
-nnoremap gs  :<C-u>%s///g<Left><Left><Left>
-vnoremap gs  :<C-u>s///g<Left><Left><Left>
-onoremap ap  a)
-onoremap ip  i)
-onoremap aa  a>
-onoremap ia  i>
-onoremap am  a}
-onoremap im  i}
-onoremap al  a]
-onoremap il  i]
-onoremap ad  a"
-onoremap id  i"
-onoremap as  a'
-onoremap is  i'
+nnoremap gs :<C-u>%s///g<Left><Left><Left>
+vnoremap gs :<C-u>s///g<Left><Left><Left>
+onoremap ap a)
+onoremap ip i)
+onoremap aa a>
+onoremap ia i>
+onoremap am a}
+onoremap im i}
+onoremap al a]
+onoremap il i]
+onoremap ad a"
+onoremap id i"
+onoremap as a'
+onoremap is i'
 nnoremap <Down> <C-w>j
 nnoremap <Up> <C-w>k
 nnoremap <Left> <C-w>h
@@ -181,8 +181,8 @@ nnoremap <silent><space>. :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent><Esc><Esc> :<C-u>noh<CR>
 
 "ノーマルモードのまま空行を挿入
-nnoremap <silent><space>o  :<C-u>for i in range(v:count1) \| call append(line('.'), '') \| endfor<CR>
-nnoremap <silent><space>O  :<C-u>for i in range(v:count1) \| call append(line('.')-1, '') \| endfor<CR>
+nnoremap <silent><space>o :<C-u>for i in range(v:count1) \| call append(line('.'), '') \| endfor<CR>
+nnoremap <silent><space>O :<C-u>for i in range(v:count1) \| call append(line('.')-1, '') \| endfor<CR>
 
 "Encode
 set encoding=UTF-8
@@ -203,7 +203,7 @@ let g:tex_conceal = ''
 noremap <expr> n <SID>search_forward_p() ? 'nzv' : 'Nzv'
 noremap <expr> N <SID>search_forward_p() ? 'Nzv' : 'nzv'
 function! s:search_forward_p()
-  return exists('v:searchforward') ? v:searchforward : 1
+    return exists('v:searchforward') ? v:searchforward : 1
 endfunction
 
 """""""""""better-whitespaceの設定"""""""""""""""
@@ -272,19 +272,19 @@ command! Chstop ChromeReloadStop
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""emmet-vimの設定"""""""""""""""""""""""
-  let g:user_emmet_settings = {
+let g:user_emmet_settings = {
     \ 'variables':{
     \ 'lang':"ja"
     \},
     \ 'indentation':'    '
-  \}
+\}
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""スニペットの設定"""""""""""""""""""""""""""""""""
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory='~/dotfiles/snippets/'
 nnoremap <silent><space>, :<C-u>NeoSnippetEdit<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -304,96 +304,96 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 """"""""""syntasticとlightlineの設定""""""""""""
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_chek_on_open=1
-let g:syntastic_chek_on_wq=0
-let g:syntastic_loc_list_height=8
+let g:syntastic_enable_signs             = 1
+let g:syntastic_auto_loc_list            = 1
+let g:syntastic_chek_on_open             = 1
+let g:syntastic_chek_on_wq               = 0
+let g:syntastic_loc_list_height          = 8
 
 let g:lightline = {
-      \ 'colorscheme' : 'wombat',
-      \ 'active': {
-      \   'left' : [ [ 'mode', 'imstate' ],
-      \              [ 'fugitive', 'filename' ],],
-      \   'right': [ [ 'syntastic', 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ],]
-      \ },
-      \ 'component_function': {
-      \   'mode' : 'LightLineMode',
-      \   'imstate' : 'LightLineIMStatus',
-      \   'fugitive' : 'LightLineFugitive',
-      \   'filename' : 'LightLineFilename',
-      \   'modified' : 'LightLineModefied',
-      \   'fileformat' : 'LightLineFileformat',
-      \   'filetype' : 'LightLineFiletype',
-      \   'fileencoding' : 'LightLineFileencoding',
-      \},
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
-      \ }
+    \ 'colorscheme' : 'wombat',
+    \ 'active': {
+    \    'left' : [ [ 'mode', 'imstate' ],
+    \    [ 'fugitive', 'filename' ],],
+    \     'right': [ [ 'syntastic', 'lineinfo' ],
+    \    [ 'percent' ],
+    \    [ 'fileformat', 'fileencoding', 'filetype' ],]
+    \ },
+    \ 'component_function': {
+    \    'mode' : 'LightLineMode',
+    \    'imstate' : 'LightLineIMStatus',
+    \    'fugitive' : 'LightLineFugitive',
+    \    'filename' : 'LightLineFilename',
+    \    'modified' : 'LightLineModefied',
+    \    'fileformat' : 'LightLineFileformat',
+    \    'filetype' : 'LightLineFiletype',
+    \    'fileencoding' : 'LightLineFileencoding',
+    \},
+    \ 'component_expand': {
+    \    'syntastic': 'SyntasticStatuslineFlag',
+    \ },
+    \ 'component_type': {
+    \    'syntastic': 'error',
+    \ },
+    \ 'separator': { 'left': '⮀', 'right': '⮂' },
+    \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
+    \ }
 function! LightLineMode()
-return  &ft == 'unite' ? 'unite' :
-      \ &ft == 'vimfiler' ? 'vimfiler' :
-      \ &ft == 'vimshell' ? 'vimshell' :
-      \ lightline#mode()
+return &ft == 'unite' ? 'unite' :
+    \ &ft == 'vimfiler' ? 'vimfiler' :
+    \ &ft == 'vimshell' ? 'vimshell' :
+    \ lightline#mode()
 endfunction
 function! LightLineIMStatus()
-  return IMStatus('JpFixMode')
+    return IMStatus('JpFixMode')
 endfunction
 function! LightLineFugitive()
-  if exists("*fugitive#head")
-      let branch = fugitive#head()
-      return  &ft == 'unite' ? '':
-            \ &ft == 'vimfiler' ? '':
-            \ branch !=# '' && winwidth(0) > 60 ? '⭠ '.branch : ''
-  endif
-  return ''
+    if exists("*fugitive#head")
+        let branch = fugitive#head()
+        return &ft == 'unite' ? '':
+        \ &ft == 'vimfiler' ? '':
+        \ branch !=# '' && winwidth(0) > 60 ? '⭠ '.branch : ''
+    endif
+    return ''
 endfunction
 function! LightLineModefied()
-  if &modified
-      return "+"
-  elseif &modifiable
-      return ""
-  else
-      return "-"
+    if &modified
+        return "+"
+    elseif &modifiable
+        return ""
+    else
+        return "-"
 endfunction
 function! LightLineFilename()
-  return ('' != expand('%:t') ? expand('%:t') : '[No Nome]') .
-       \ ('' != LightLineModefied() ? ' ' . LightLineModefied() : '')
+    return ('' != expand('%:t') ? expand('%:t') : '[No Nome]') .
+        \ ('' != LightLineModefied() ? ' ' . LightLineModefied() : '')
 endfunction
 function! LightLineFiletype()
-  return  IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 110 ? '' :
+    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 110 ? '' :
         \ IMStatus('A') == 'A' && winwidth(0) < 80 ? '' :
         \ SyntasticStatuslineFlag() != '' && winwidth(0) < 90 ? '':
         \ winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
 endfunction
 function! LightLineFileencoding()
-  return  IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 115 ? '' :
+    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 115 ? '' :
         \ IMStatus('A') == 'A' && winwidth(0) < 90 ? '' :
         \ SyntasticStatuslineFlag() != '' && winwidth(0) < 100 ? '':
         \ winwidth(0) > 75 ? (&fenc !=# '' ? &fenc : &enc) : ''
 endfunction
 function! LightLineFileformat()
-  return  IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 120 ? '' :
+    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 120 ? '' :
         \ IMStatus('A') == 'A' && winwidth(0) < 100 ? '' :
         \ SyntasticStatuslineFlag() != '' && winwidth(0) < 110 ? '':
         \ winwidth(0) > 80 ? &fileformat : ''
 endfunction
 let g:syntastic_mode_map = { 'mode': 'passive' }
 augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.sh, call s:syntastic()
+    autocmd!
+    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.sh,*.html,*htm call s:syntastic()
 augroup END
 function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
+    SyntasticCheck
+    call lightline#update()
 endfunction
 """""""""""""""""""""""""""""""""""""
 
@@ -414,22 +414,22 @@ nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 "vimfilerをIDE風に開く
 nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
 "デフォルトのキーマッピングを変更
-augroup vimrc
-  autocmd!
-  autocmd FileType vimfiler call s:vimfiler_my_settings()
+augroup vimfiler
+    autocmd!
+    autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
-  nmap <buffer> <S-l> <C-w>l
+    nmap <buffer> <S-l> <C-w>l
 endfunction
 
 "VimFilerでリモートのファイルをIDE風に開くためのコマンド
 command! -nargs=1 SshFilerTree call SshFilerTree(<f-args>)
 function! SshFilerTree(host)
-  if bufnr('vimfiler:tree') != -1
-    execute ':bw vimfiler:tree'
-  endif
-  let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=tree ssh://'.a:host.'/'
-  execute ':VimFiler '.l:vimfiler_options
+    if bufnr('vimfiler:tree') != -1
+        execute ':bw vimfiler:tree'
+    endif
+    let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=tree ssh://'.a:host.'/'
+    execute ':VimFiler '.l:vimfiler_options
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -453,7 +453,7 @@ let IM_CtrlMode = 6
 inoremap <silent> <C-j> <C-r>=IMState('FixMode')<CR>
 set timeout timeoutlen=3000 ttimeoutlen=100
 "ファイルがunite,vimshell,vimfilerの場合、日本語入力固定モードを個別制御
-au FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocalMode = 1
+au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocalMode = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""VimShellの設定""""""""""""""""""""""
@@ -473,7 +473,7 @@ let g:vimshell_enable_start_insert = 0
 command! Change call s:Change()
 nnoremap <silent> <F4> :Change<CR>
 function! s:Change()
-  call vimshell#interactive#send('cd '.expand("%:p:h"))
+    call vimshell#interactive#send('cd '.expand("%:p:h"))
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -484,17 +484,17 @@ inoremap 。 ．
 command! ToggleConvPunc call s:ToggleConvPunc()
 nnoremap <silent> <space>c :ToggleConvPunc<CR>
 function! s:ToggleConvPunc()
-  if g:toggle_conv_punc == 0
-    inoremap 、 ，
-    inoremap 。 ．
-    let g:toggle_conv_punc=1
-    echo 'Convert:ON'
-  else
-    inoremap 、 、
-    inoremap 。 。
-    let g:toggle_conv_punc=0
-    echo 'Convert:OFF'
-  endif
+    if g:toggle_conv_punc == 0
+        inoremap 、 ，
+        inoremap 。 ．
+        let g:toggle_conv_punc=1
+        echo 'Convert:ON'
+    else
+        inoremap 、 、
+        inoremap 。 。
+        let g:toggle_conv_punc=0
+        echo 'Convert:OFF'
+    endif
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -502,19 +502,19 @@ endfunction
 command! Compile call s:Compile()
 nnoremap <silent> <F2> :Compile<CR>
 function! s:Compile()
-  let e = expand("%:e")
-  if e == "c"
-    call vimshell#interactive#send('gcc '.expand("%:p").' -o '.expand("%:p:r").'.out -lm')
-  endif
-  if e == "cc" || e == "cpp"
-    call vimshell#interactive#send('g++ '.expand("%:p").' -o '.expand("%:p:r").'.out')
-  endif
-  if e == "f90" || e == "f95"
-    call vimshell#interactive#send('gfortran '.expand("%:p").' -o '.expand("%:p:r").'.out')
-  endif
-  if e == "tex"
-    call vimshell#interactive#send('latexmk '.expand("%:p"))
-  endif
+    let e = expand("%:e")
+    if e == "c"
+        call vimshell#interactive#send('gcc '.expand("%:p").' -o '.expand("%:p:r").'.out -lm')
+    endif
+    if e == "cc" || e == "cpp"
+        call vimshell#interactive#send('g++ '.expand("%:p").' -o '.expand("%:p:r").'.out')
+    endif
+    if e == "f90" || e == "f95"
+        call vimshell#interactive#send('gfortran '.expand("%:p").' -o '.expand("%:p:r").'.out')
+    endif
+    if e == "tex"
+        call vimshell#interactive#send('latexmk '.expand("%:p"))
+    endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -522,15 +522,15 @@ endfunction
 command! Go call s:Go()
 nnoremap <silent> <F3> :Go<CR>
 function! s:Go()
-  let e = expand("%:e")
-  if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
-    call vimshell#interactive#send(expand("%:p:r").'.out')
-  endif
-  if e == "py"
-    call vimshell#interactive#send('python '.expand("%:p"))
-  endif
-  if e == "lua"
-    call vimshell#interactive#send('lua '.expand("%:p"))
-  endif
+    let e = expand("%:e")
+    if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
+        call vimshell#interactive#send(expand("%:p:r").'.out')
+    endif
+    if e == "py"
+        call vimshell#interactive#send('python '.expand("%:p"))
+    endif
+    if e == "lua"
+        call vimshell#interactive#send('lua '.expand("%:p"))
+    endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
