@@ -207,7 +207,7 @@ function! s:search_forward_p()
 endfunction
 
 """""""""""better-whitespaceの設定"""""""""""""""
-let g:better_whitespace_filetypes_blacklist=['vimshell', 'vimfiler', 'unite', 'neosnippet']
+let g:better_whitespace_filetypes_blacklist=['vimshell', 'vimfiler', 'unite', 'neosnippet', 'help']
 nmap <space>d :StripWhitespace<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -457,8 +457,6 @@ au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocal=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""VimShellの設定""""""""""""""""""""""
-"VimShellを開く
-nnoremap <silent><space>t :<C-u>VimShell -buffer-name=terminal -toggle<CR>
 "PopupでVimShellを開く
 nnoremap <silent><space>s :<C-u>VimShellPop -buffer-name=terminal<CR>
 "動的プロンプトを適用
