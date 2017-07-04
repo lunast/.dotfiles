@@ -124,6 +124,12 @@ set softtabstop=4
 set autoindent
 set smartindent
 
+"htmlファイルのインデント幅は2に設定
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.html,*htm setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
 "新しいwindowを開く時、右もしくは下に新しいwindowを開く
 set splitbelow
 set splitright
