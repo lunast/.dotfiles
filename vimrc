@@ -487,7 +487,7 @@ let g:toggle_conv_punc=1
 inoremap 、 ，
 inoremap 。 ．
 command! ToggleConvPunc call s:ToggleConvPunc()
-nnoremap <silent> <space>c :ToggleConvPunc<CR>
+nnoremap <silent> <space>p :<C-u>ToggleConvPunc<CR>
 function! s:ToggleConvPunc()
     if g:toggle_conv_punc == 0
         inoremap 、 ，
