@@ -111,7 +111,9 @@ set nobackup
 set noswapfile
 
 "OSのクリップボードを使用
-set clipboard=unnamed,unnamedplus
+if has('clipboard')
+    set clipboard=unnamed,unnamedplus
+endif
 
 "括弧のハイライトの色
 hi MatchParen ctermfg = darkred ctermbg = grey
