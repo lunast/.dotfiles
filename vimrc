@@ -159,7 +159,10 @@ nnoremap <space>/ *<C-o>
 nnoremap g<space>/ g*<C-o>
 inoremap jk <Esc>
 inoremap ｊｋ <Esc>
-inoremap <C-l> <Right>
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-b> <Left>
 nnoremap gs :<C-u>%s///g<Left><Left><Left>
 vnoremap gs :<C-u>s///g<Left><Left><Left>
 onoremap ap a)
