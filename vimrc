@@ -276,6 +276,7 @@ vmap gx <Plug>(openbrowser-smart-search)
 command! Chr ChromeReload
 command! Chstart ChromeReloadStart
 command! Chstop ChromeReloadStop
+au! BufRead,BufNewFile *htm,*html execute(':Chstart')
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""emmet-vimの設定"""""""""""""""""""""""
