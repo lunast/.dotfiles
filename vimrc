@@ -543,5 +543,8 @@ function! s:Go()
     if e == "lua"
         call vimshell#interactive#send('lua '.expand("%:p"))
     endif
+    if e == "htm" || e == "html"
+        call vimproc#open(expand("%:p"))
+    endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
