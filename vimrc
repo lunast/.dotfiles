@@ -102,6 +102,9 @@ set number
 "ファイル変更中に他のファイルを表示可能にする
 set hidden
 
+"非常に長い行を表示
+set display=lastline
+
 "ビープ音を無効にする
 set visualbell t_vb=
 
@@ -159,6 +162,8 @@ nnoremap <space>q :<C-u>q<CR>
 nnoremap <space>Q :<C-u>q!<CR>
 nnoremap <space>/ *<C-o>
 nnoremap g<space>/ g*<C-o>
+nnoremap + <C-a>
+nnoremap - <C-x>
 inoremap jk <Esc>
 inoremap ｊｋ <Esc>
 inoremap <C-f> <Right>
