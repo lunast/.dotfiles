@@ -430,7 +430,7 @@ let g:vimfiler_force_overwrite_statusline=0
 "現在開いているバッファのディレクトリを開く
 nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 "vimfilerをIDE風に開く
-nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
+nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=explorer<CR>
 "デフォルトのキーマッピングを変更
 augroup vimfiler
     autocmd!
@@ -443,10 +443,10 @@ endfunction
 "VimFilerでリモートのファイルをIDE風に開くためのコマンド
 command! -nargs=1 SshFilerTree call SshFilerTree(<f-args>)
 function! SshFilerTree(host)
-    if bufnr('vimfiler:tree') != -1
-        execute ':bw vimfiler:tree'
+    if bufnr('vimfiler:explorer') != -1
+        execute ':bw vimfiler:explorer'
     endif
-    let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=tree ssh://'.a:host.'/'
+    let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=explorer ssh://'.a:host.'/'
     execute ':VimFiler '.l:vimfiler_options
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
