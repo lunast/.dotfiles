@@ -485,12 +485,6 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+$ '
 let g:vimshell_popup_height = '25'
 "normalモードでvimShellを開く
 let g:vimshell_enable_start_insert = 0
-"VimShellのディレクトリをカレントディレクトリに移動
-command! Change call s:Change()
-nnoremap <silent> <F4> :Change<CR>
-function! s:Change()
-    call vimshell#interactive#send('cd '.expand("%:p:h"))
-endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""句読点の変換を切り替えるtoggle""""""""""""""
@@ -519,17 +513,33 @@ command! Compile call s:Compile()
 nnoremap <silent> <F2> :Compile<CR>
 function! s:Compile()
     let e = expand("%:e")
+    let l:current_directory = expand("%:p:h")
+    let l:filename_ext = expand("%:p")
+    let l:filename = expand("%:p:r")
     if e == "c"
-        call vimshell#interactive#send('gcc '.expand("%:p").' -o '.expand("%:p:r").'.out -lm')
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('gcc '.l:filename_ext.' -o '.l:filename.'.out -lm')
     endif
     if e == "cc" || e == "cpp"
-        call vimshell#interactive#send('g++ '.expand("%:p").' -o '.expand("%:p:r").'.out')
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('g++ '.l:filename_ext.' -o '.l:filename.'.out -lm')
     endif
     if e == "f90" || e == "f95"
-        call vimshell#interactive#send('gfortran '.expand("%:p").' -o '.expand("%:p:r").'.out')
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
     endif
     if e == "tex"
-        call vimshell#interactive#send('latexmk '.expand("%:p"))
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('cd '.l:current_directory)
+        call vimshell#interactive#send('latexmk '.l:filename_ext)
     endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -539,14 +549,25 @@ command! Go call s:Go()
 nnoremap <silent> <F3> :Go<CR>
 function! s:Go()
     let e = expand("%:e")
+    let l:filename_ext = expand("%:p")
+    let l:filename = expand("%:p:r")
     if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
-        call vimshell#interactive#send(expand("%:p:r").'.out')
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send(l:filename.'.out')
     endif
     if e == "py"
-        call vimshell#interactive#send('python '.expand("%:p"))
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('python '.l:filename_ext)
     endif
     if e == "lua"
-        call vimshell#interactive#send('lua '.expand("%:p"))
+        if bufnr('[vimshell] - terminal') == -1
+            execute(':VimShellPop -buffer-name=terminal')
+        endif
+        call vimshell#interactive#send('lua '.l:filename_ext)
     endif
     if e == "htm" || e == "html"
         call vimproc#open(expand("%:p"))
