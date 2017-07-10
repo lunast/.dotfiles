@@ -517,25 +517,29 @@ function! s:Compile()
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
     if e == "c"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('gcc '.l:filename_ext.' -o '.l:filename.'.out -lm')
     endif
     if e == "cc" || e == "cpp"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('g++ '.l:filename_ext.' -o '.l:filename.'.out -lm')
     endif
     if e == "f90" || e == "f95"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
     endif
     if e == "tex"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('cd '.l:current_directory)
@@ -552,19 +556,22 @@ function! s:Go()
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
     if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send(l:filename.'.out')
     endif
     if e == "py"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('python '.l:filename_ext)
     endif
     if e == "lua"
-        if bufnr('[vimshell] - terminal') == -1
+        if bufnr('[vimshell] - terminal') == -1 ||
+        \ getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
         call vimshell#interactive#send('lua '.l:filename_ext)
