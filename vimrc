@@ -519,8 +519,8 @@ function! s:Compile()
     if bufnr('[vimshell] - terminal') == -1
         execute(':VimShellPop -buffer-name=terminal')
     endif
-    if v:version > 800
-        if getbufinfo(['[vimshell] - terminal'])['hidden'] == 1
+    if v:version >= 800
+        if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
     endif
@@ -550,8 +550,8 @@ function! s:Go()
     if bufnr('[vimshell] - terminal') == -1
         execute(':VimShellPop -buffer-name=terminal')
     endif
-    if v:version > 800
-        if getbufinfo(['[vimshell] - terminal'])['hidden'] == 1
+    if v:version >= 800
+        if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
             execute(':VimShellPop -buffer-name=terminal')
         endif
     endif
