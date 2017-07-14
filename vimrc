@@ -246,7 +246,7 @@ vmap <C-l> <Plug>(easymotion-bd-jk)
 omap <C-l> <Plug>(easymotion-bd-jk)
 "easymotionでmigemo検索を可能に
 let g:EasyMotion_use_migemo = 1
-"smartcase
+"大文字を入力したとき以外は大文字、小文字を無視
 let g:EasyMotion_smartcase = 1
 """""""""""""""""""""""""""""""""""""""""""""""""
 
