@@ -243,8 +243,11 @@ vmap s <Plug>(easymotion-bd-f2)
 "ライン移動
 nmap <C-l> <Plug>(easymotion-overwin-line)
 vmap <C-l> <Plug>(easymotion-bd-jk)
+omap <C-l> <Plug>(easymotion-bd-jk)
 "easymotionでmigemo検索を可能に
 let g:EasyMotion_use_migemo = 1
+"smartcase
+let g:EasyMotion_smartcase = 1
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""clever-fの設定""""""""""""""""""""""""
