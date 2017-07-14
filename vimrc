@@ -84,6 +84,9 @@ syntax on
 colorscheme molokai
 set t_Co=256
 
+"デフォルトのファイルタイプをtextに
+setf text
+
 "ステータスバーの表示
 set laststatus=2
 
@@ -195,6 +198,7 @@ nnoremap <S-l> <C-w>l
 nnoremap <silent><space>c :<C-u>only<CR>
 nnoremap <silent><space>. :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent><Esc><Esc> :<C-u>noh<CR>
+nnoremap <silent><space>du :<C-u>call dein#update()<CR>
 
 "ノーマルモードのまま空行を挿入
 nnoremap <silent><space>o :<C-u>for i in range(v:count1) \| call append(line('.'), '') \| endfor<CR>
