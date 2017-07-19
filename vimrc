@@ -200,6 +200,18 @@ nnoremap <silent><space>. :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent><Esc><Esc> :<C-u>noh<CR>
 nnoremap <silent><space>du :<C-u>call dein#update()<CR>
 
+"入力モードで全角数字を半角数字に変換
+inoremap １ 1
+inoremap ２ 2
+inoremap ３ 3
+inoremap ４ 4
+inoremap ５ 5
+inoremap ６ 6
+inoremap ７ 7
+inoremap ８ 8
+inoremap ９ 9
+inoremap ０ 0
+
 "ノーマルモードのまま空行を挿入
 nnoremap <silent><space>o :<C-u>for i in range(v:count1) \| call append(line('.'), '') \| endfor<CR>
 nnoremap <silent><space>O :<C-u>for i in range(v:count1) \| call append(line('.')-1, '') \| endfor<CR>
