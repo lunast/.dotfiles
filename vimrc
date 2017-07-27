@@ -241,7 +241,7 @@ endfunction
 """""""""""better-whitespaceの設定"""""""""""""""
 let g:better_whitespace_filetypes_blacklist=
     \['vimshell', 'vimfiler', 'unite', 'neosnippet', 'help']
-nmap <space>d :StripWhitespace<CR>
+nmap <space>ds :StripWhitespace<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""fugitiveの設定""""""""""""""""""""""""
