@@ -84,8 +84,11 @@ syntax on
 colorscheme molokai
 set t_Co=256
 
-"デフォルトのファイルタイプをtextに
+"ファイルタイプを認識しないバグの回避
 setf text
+if !did_filetype()
+  setlocal filetype=
+endif
 
 "ステータスバーの表示
 set laststatus=2
