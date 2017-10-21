@@ -459,7 +459,7 @@ augroup vimfiler
     autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
-    nmap <buffer> <S-l> <C-w>l
+    nmap <buffer><S-l> <C-w>l
 endfunction
 
 "VimFilerでリモートのファイルをIDE風に開くためのコマンド
@@ -507,6 +507,14 @@ let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+$ '
 let g:vimshell_popup_height = '25'
 "normalモードでvimShellを開く
 let g:vimshell_enable_start_insert = 0
+"デフォルトのキーマッピングを変更
+augroup vimshell
+    autocmd!
+    autocmd FileType vimshell call s:vimshell_my_settings()
+augroup END
+function! s:vimshell_my_settings()
+    imap <buffer><c-l> <Esc>zta
+endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""句読点の変換を切り替えるtoggle""""""""""""""
