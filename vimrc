@@ -244,13 +244,13 @@ endfunction
 """""""""""better-whitespaceの設定"""""""""""""""
 let g:better_whitespace_filetypes_blacklist=
     \['vimshell', 'vimfiler', 'unite', 'neosnippet', 'help']
-nmap <space>ds :StripWhitespace<CR>
+nnoremap <space>ds :StripWhitespace<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""fugitiveの設定""""""""""""""""""""""""
-nmap <silent><space>gs :<C-u>Gstatus<CR>
-nmap <silent><space>gw :<C-u>Gwrite<CR>
-nmap <silent><space>gr :<C-u>Gread<CR>
+nnoremap <silent><space>gs :<C-u>Gstatus<CR>
+nnoremap <silent><space>gw :<C-u>Gwrite<CR>
+nnoremap <silent><space>gr :<C-u>Gread<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""easymotionの設定""""""""""""""""""""""
@@ -439,9 +439,9 @@ endfunction
 
 """""""""""uniteの設定"""""""""""""""""""""""""""""""""""""""""""""
 let g:unite_force_overwrite_statusline=0
-nmap <silent> <space>u :<C-u>Unite -buffer-name=buffer buffer<CR>
-nmap <silent> <space>m :<C-u>Unite -buffer-name=history file_mru<CR>
-nmap <silent> <space>y :<C-u>Unite -buffer-name=yankround history/yank<CR>
+nnoremap <silent> <space>u :<C-u>Unite -buffer-name=buffer buffer<CR>
+nnoremap <silent> <space>m :<C-u>Unite -buffer-name=history file_mru<CR>
+nnoremap <silent> <space>y :<C-u>Unite -buffer-name=yankround history/yank<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""vimfilerの設定""""""""""""""""""""""""
@@ -459,7 +459,7 @@ augroup vimfiler
     autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
-    nmap <buffer><S-l> <C-w>l
+    nnoremap <buffer><S-l> <C-w>l
 endfunction
 
 "VimFilerでリモートのファイルをIDE風に開くためのコマンド
@@ -513,7 +513,7 @@ augroup vimshell
     autocmd FileType vimshell call s:vimshell_my_settings()
 augroup END
 function! s:vimshell_my_settings()
-    imap <buffer><c-l> <Esc>zta
+    inoremap <buffer><c-l> <Esc>zta
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -522,7 +522,7 @@ let g:toggle_conv_punc=1
 inoremap 、 ，
 inoremap 。 ．
 command! ToggleConvPunc call s:ToggleConvPunc()
-nnoremap <silent> <space>p :<C-u>ToggleConvPunc<CR>
+nnoremap <silent><space>p :<C-u>ToggleConvPunc<CR>
 function! s:ToggleConvPunc()
     if g:toggle_conv_punc == 0
         inoremap 、 ，
