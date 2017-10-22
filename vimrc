@@ -429,7 +429,7 @@ endfunction
 let g:syntastic_mode_map = { 'mode': 'passive' }
 augroup AutoSyntastic
     autocmd!
-    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py, call s:syntastic()
+    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.rb, call s:syntastic()
 augroup END
 function! s:syntastic()
     SyntasticCheck
@@ -593,6 +593,9 @@ function! s:Go()
     endif
     if e == "lua"
         call vimshell#interactive#send('lua '.l:filename_ext)
+    endif
+    if e == "rb"
+        call vimshell#interactive#send('ruby '.l:filename_ext)
     endif
     if e == "htm" || e == "html"
         call vimproc#open(expand("%:p"))
