@@ -178,6 +178,7 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 nnoremap gs :<C-u>%s///g<Left><Left><Left>
 vnoremap gs :<C-u>s///g<Left><Left><Left>
+vnoremap a ggoG$
 onoremap ap a)
 onoremap ip i)
 onoremap aa a>
