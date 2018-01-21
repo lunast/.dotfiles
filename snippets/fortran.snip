@@ -79,6 +79,11 @@ abbr double precision, intent(out)
 options head
     double precision, intent(out) :: 
 
+snippet doubles
+abbr double precision, save
+options head
+    double precision, save :: 
+
 snippet doublea
 abbr double precision, allocatable
 options head
@@ -128,6 +133,11 @@ snippet como
 abbr complex(kind(0d0)), intent(out)
 options head
     complex(kind(0d0)), intent(out) :: 
+
+snippet coms
+abbr compex(kind(0d0)), save
+options head
+    complex(kind(0d0)), save :: 
 
 snippet coma
 abbr complex(kind(0d0)), allocatable
