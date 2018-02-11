@@ -229,7 +229,26 @@ set fileformats=unix,dos,mac
 let fortran_free_source=1
 let fortran_fold=1
 au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
-au! BufWritePre *.f90 :cd %:p:h
+"モジュールファイルの出力先を指定する変数，デフォルトはバッファのカレントディレクトリ
+let g:fortran_module_directory="%:p:h"
+au! BufRead,BufNewFile,BufWritePre *.f90 execute('cd '.expand(g:fortran_module_directory))
+"g:fortran_module_directoryの値を書き換えるコマンド
+"指定したディレクトリが存在しない場合はそのディレクトリを作成する
+command! -nargs=1 ChModDir call ChModDir(<f-args>)
+function! ChModDir(dir)
+    let cursor=getpos(".")
+    let g:fortran_module_directory=expand(a:dir)
+    let l:is_directory_flag=isdirectory(g:fortran_module_directory)
+    if l:is_directory_flag != 1
+        execute(mkdir(g:fortran_module_directory))
+    endif
+    execute('cd '.expand(g:fortran_module_directory))
+    call setpos(".", cursor)
+    unlet cursor
+    if l:is_directory_flag != 1
+        execute('echo "mkdir -p '.expand(g:fortran_module_directory).'"')
+    endif
+endfunction
 
 "tex用の設定
 let g:tex_flavor = "latex"
