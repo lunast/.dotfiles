@@ -480,7 +480,7 @@ let g:vimfiler_force_overwrite_statusline=0
 "現在開いているバッファのディレクトリを開く
 nnoremap <silent> <space>e :<C-u>VimFilerBufferDir -buffer-name=explorer<CR>
 "vimfilerをIDE風に開く
-nnoremap <silent> <C-e> :<C-u>VimFiler -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
+nnoremap <silent> <C-e> :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -toggle -no-quit -buffer-name=tree<CR>
 "デフォルトのキーマッピングを変更
 augroup vimfiler
     autocmd!
