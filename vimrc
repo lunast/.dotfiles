@@ -228,10 +228,10 @@ set fileformats=unix,dos,mac
 "fortran90用の設定
 let fortran_free_source=1
 let fortran_fold=1
-au! BufRead,BufNewFile *.f90 let b:fortran_do_enddo=1
+au! BufRead,BufNewFile *.f90,*f03 let b:fortran_do_enddo=1
 "モジュールファイルの出力先を指定する変数，デフォルトはバッファのカレントディレクトリ
 let g:fortran_module_directory="%:p:h"
-au! BufRead,BufNewFile,BufWritePre *.f90 call CdModDir()
+au! BufRead,BufNewFile,BufWritePre *.f90,*f03 call CdModDir()
 "g:fortran_module_directoryの値を書き換え，そのディレクトリに移動するコマンド
 "指定したディレクトリが存在しない場合はそのディレクトリを作成する
 command! -nargs=1 ChModDir call ChModDir(<f-args>)
@@ -457,7 +457,7 @@ endfunction
 let g:syntastic_mode_map = { 'mode': 'passive' }
 augroup AutoSyntastic
     autocmd!
-    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.py,*.rb, call s:syntastic()
+    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.f03,*.py,*.rb, call s:syntastic()
 augroup END
 function! s:syntastic()
     SyntasticCheck
@@ -588,7 +588,7 @@ function! s:Compile()
     if e == "cc" || e == "cpp"
         call vimshell#interactive#send('g++ '.l:filename_ext.' -o '.l:filename.'.out -lm')
     endif
-    if e == "f90" || e == "f95"
+    if e == "f90" || e == "f95" || e == "f03"
         call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
     endif
     if e == "tex"
@@ -613,7 +613,7 @@ function! s:Go()
             execute(':VimShellPop -buffer-name=terminal')
         endif
     endif
-    if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95"
+    if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95" || e == "f03"
         call vimshell#interactive#send(l:filename.'.out')
     endif
     if e == "py"
