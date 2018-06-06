@@ -1,6 +1,22 @@
 snippet main
-options     head
+options	 head
 	int main(int argc, char const* argv[]) {
 		${0:TARGET}
+		return 0;
+	}
+
+snippet dxmain
+options	 head
+	#ifdef DXPORTLIB
+	int main(int argc, char const* argv[]) {
+		SetUseCharSet(DX_CHARSET_EXT_UTF8);
+	#else
+	int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+	#endif
+		ChangeWindowMode(TRUE);
+		if (DxLib_Init() == -1) return -1;
+		SetDrawScreen(DX_SCREEN_BACK);
+		${0:TARGET}
+		DxLib_End();
 		return 0;
 	}
