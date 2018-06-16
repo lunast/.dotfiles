@@ -372,7 +372,7 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 """"""""""aleの設定"""""""""""""""""""""""""""""""""""""""""
 let g:ale_sign_column_always = 1
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
+let g:ale_statusline_format = ['[ERROR]%d', '[WARNING]%d', '']
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARNING'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
