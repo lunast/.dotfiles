@@ -353,7 +353,7 @@ let g:user_emmet_settings = {
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
-let g:neosnippet#snippets_directory='~/dotfiles/snippets/'
+let g:neosnippet#snippets_directory='~/.dotfiles/snippets/'
 nnoremap <silent><space>, :<C-u>NeoSnippetEdit<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
