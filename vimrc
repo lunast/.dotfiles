@@ -40,7 +40,7 @@ call dein#add('tomasr/molokai')
 call dein#add('fuenor/im_control.vim')
 call dein#add('haya14busa/incsearch-migemo.vim')
 call dein#add('tpope/vim-fugitive')
-call dein#add('scrooloose/syntastic.git')
+call dein#add('w0rp/ale')
 call dein#add('ntpeters/vim-better-whitespace')
 call dein#add('mattn/emmet-vim')
 call dein#add('hail2u/vim-css3-syntax')
@@ -370,100 +370,79 @@ let g:neocomplete#enable_fuzzy_completion         = 1
 let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""syntasticとlightlineの設定""""""""""""
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_signs             = 1
-let g:syntastic_auto_loc_list            = 1
-let g:syntastic_chek_on_open             = 1
-let g:syntastic_chek_on_wq               = 0
-let g:syntastic_loc_list_height          = 8
+""""""""""aleの設定"""""""""""""""""""""""""""""""""""""""""
+let g:ale_sign_column_always = 1
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '']
+let g:ale_echo_msg_error_str = 'ERROR'
+let g:ale_echo_msg_warning_str = 'WARNING'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_linters = {
+\    'c' : ['clang'],
+\    'cpp' : ['clang'],
+\}
+nmap <silent><C-k> <Plug>(ale_previous_wrap)
+nmap <silent><C-j> <Plug>(ale_next_wrap)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""lightlineの設定"""""""""""""""""""""""""""""""""""
 let g:lightline = {
     \ 'colorscheme' : 'wombat',
-    \ 'active': {
-    \    'left' : [ [ 'mode', 'imstate' ],
-    \    [ 'fugitive', 'filename' ],],
-    \     'right': [ [ 'syntastic', 'lineinfo' ],
-    \    [ 'percent' ],
-    \    [ 'fileformat', 'fileencoding', 'filetype' ],]
-    \ },
-    \ 'component_function': {
-    \    'mode' : 'LightLineMode',
+    \ 'active' : {
+    \    'left' : [['mode', 'imstate'],
+    \    ['fugitive', 'filename'],],
+    \    'right' : [['ale', 'ale_update', 'lineinfo'],
+    \    ['percent'],
+    \    ['fileformat', 'fileencoding', 'filetype'],]
+    \},
+    \ 'component_function' : {
     \    'imstate' : 'LightLineIMStatus',
     \    'fugitive' : 'LightLineFugitive',
     \    'filename' : 'LightLineFilename',
-    \    'modified' : 'LightLineModefied',
-    \    'fileformat' : 'LightLineFileformat',
-    \    'filetype' : 'LightLineFiletype',
-    \    'fileencoding' : 'LightLineFileencoding',
+    \    'ale_update' : 'LightLineAle',
     \},
-    \ 'component_expand': {
-    \    'syntastic': 'SyntasticStatuslineFlag',
-    \ },
-    \ 'component_type': {
-    \    'syntastic': 'error',
-    \ },
+    \ 'component_expand' : {
+    \    'ale' : 'ALEGetStatusLine',
+    \},
+    \ 'component_type' : {
+    \    'ale' : 'error',
+    \},
     \ 'separator': { 'left': '⮀', 'right': '⮂' },
     \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
-    \ }
-function! LightLineMode()
-return &ft == 'unite' ? 'unite' :
-    \ &ft == 'vimfiler' ? 'vimfiler' :
-    \ &ft == 'vimshell' ? 'vimshell' :
-    \ lightline#mode()
-endfunction
+\}
+
 function! LightLineIMStatus()
     return IMStatus('JpFixMode')
 endfunction
+
 function! LightLineFugitive()
     if exists("*fugitive#head")
         let branch = fugitive#head()
-        return &ft == 'unite' ? '':
-        \ &ft == 'vimfiler' ? '':
-        \ branch !=# '' && winwidth(0) > 60 ? '⭠ '.branch : ''
+        return &ft == 'unite' ? '' :
+        \ &ft == 'vimfiler' ? '' :
+        \ &ft == 'vimshell' ? '' :
+        \ branch != '' ? '⭠ '.branch : ''
     endif
     return ''
 endfunction
+
+function! LightLineFilename()
+    return ('' != expand('%:t') ? expand('%:t') : '[No Nome]').LightLineModefied()
+endfunction
+
 function! LightLineModefied()
     if &modified
-        return "+"
+        return " +"
     elseif &modifiable
         return ""
     else
-        return "-"
+        return " -"
 endfunction
-function! LightLineFilename()
-    return ('' != expand('%:t') ? expand('%:t') : '[No Nome]') .
-        \ ('' != LightLineModefied() ? ' ' . LightLineModefied() : '')
-endfunction
-function! LightLineFiletype()
-    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 110 ? '' :
-        \ IMStatus('A') == 'A' && winwidth(0) < 80 ? '' :
-        \ SyntasticStatuslineFlag() != '' && winwidth(0) < 90 ? '':
-        \ winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-function! LightLineFileencoding()
-    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 115 ? '' :
-        \ IMStatus('A') == 'A' && winwidth(0) < 90 ? '' :
-        \ SyntasticStatuslineFlag() != '' && winwidth(0) < 100 ? '':
-        \ winwidth(0) > 75 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-function! LightLineFileformat()
-    return IMStatus('A') == 'A' && SyntasticStatuslineFlag() != '' && winwidth(0) < 120 ? '' :
-        \ IMStatus('A') == 'A' && winwidth(0) < 100 ? '' :
-        \ SyntasticStatuslineFlag() != '' && winwidth(0) < 110 ? '':
-        \ winwidth(0) > 80 ? &fileformat : ''
-endfunction
-let g:syntastic_mode_map = { 'mode': 'passive' }
-augroup AutoSyntastic
-    autocmd!
-    autocmd BufWritePost *.c,*.cc,*.cpp,*.f,*.f90,*.f03,*.py,*.rb, call s:syntastic()
-augroup END
-function! s:syntastic()
-    SyntasticCheck
+
+function! LightLineAle()
     call lightline#update()
+    return ''
 endfunction
-"""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""uniteの設定"""""""""""""""""""""""""""""""""""""""""""""
 let g:unite_force_overwrite_statusline=0
