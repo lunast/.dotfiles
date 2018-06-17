@@ -41,6 +41,7 @@ call dein#add('fuenor/im_control.vim')
 call dein#add('haya14busa/incsearch-migemo.vim')
 call dein#add('tpope/vim-fugitive')
 call dein#add('w0rp/ale')
+" call dein#add('ryanoasis/vim-devicons')
 call dein#add('ntpeters/vim-better-whitespace')
 call dein#add('mattn/emmet-vim')
 call dein#add('hail2u/vim-css3-syntax')
@@ -372,9 +373,9 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 """"""""""aleの設定"""""""""""""""""""""""""""""""""""""""""
 let g:ale_sign_column_always = 1
-let g:ale_statusline_format = ['[ERROR]%d', '[WARNING]%d', '']
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARNING'
+let g:ale_statusline_format = ['[ERROR]%d', '[WARNING]%d', '']
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {
 \    'c' : ['clang'],
@@ -389,22 +390,23 @@ let g:lightline = {
     \ 'colorscheme' : 'wombat',
     \ 'active' : {
     \    'left' : [['mode', 'imstate'],
-    \    ['fugitive', 'filename'],],
-    \    'right' : [['ale', 'ale_update', 'lineinfo'],
+    \    ['fugitive', 'filename', 'ale_warning', 'ale_error'],],
+    \    'right' : [['lineinfo'],
     \    ['percent'],
-    \    ['fileformat', 'fileencoding', 'filetype'],]
+    \    ['fileformat', 'fileencoding', 'filetype']],
     \},
     \ 'component_function' : {
     \    'imstate' : 'LightLineIMStatus',
     \    'fugitive' : 'LightLineFugitive',
     \    'filename' : 'LightLineFilename',
-    \    'ale_update' : 'LightLineAle',
     \},
     \ 'component_expand' : {
-    \    'ale' : 'ALEGetStatusLine',
+    \    'ale_error' : 'ALEGetError',
+    \    'ale_warning' : 'ALEGetWarning',
     \},
     \ 'component_type' : {
-    \    'ale' : 'error',
+    \    'ale_error' : 'error',
+    \    'ale_warning' : 'warning',
     \},
     \ 'separator': { 'left': '⮀', 'right': '⮂' },
     \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
@@ -438,10 +440,22 @@ function! LightLineModefied()
         return " -"
 endfunction
 
-function! LightLineAle()
-    call lightline#update()
-    return ''
+function! ALEGetError()
+    let l:buffer = bufnr('%')
+    let l:error_count = ale#statusline#Count(l:buffer)['error']
+    return l:error_count == 0 ? '' : printf(g:ale_statusline_format[0], l:error_count)
 endfunction
+
+function! ALEGetWarning()
+    let l:buffer = bufnr('%')
+    let l:warning_count = ale#statusline#Count(l:buffer)['warning']
+    return l:warning_count == 0 ? '' : printf(g:ale_statusline_format[1], l:warning_count)
+endfunction
+
+augroup LightLineOneALE
+autocmd!
+autocmd User ALELint call lightline#update()
+augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""uniteの設定"""""""""""""""""""""""""""""""""""""""""""""
