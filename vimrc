@@ -41,7 +41,7 @@ call dein#add('fuenor/im_control.vim')
 call dein#add('haya14busa/incsearch-migemo.vim')
 call dein#add('tpope/vim-fugitive')
 call dein#add('w0rp/ale')
-" call dein#add('ryanoasis/vim-devicons')
+call dein#add('ryanoasis/vim-devicons')
 call dein#add('ntpeters/vim-better-whitespace')
 call dein#add('mattn/emmet-vim')
 call dein#add('hail2u/vim-css3-syntax')
@@ -373,16 +373,20 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 """"""""""aleの設定"""""""""""""""""""""""""""""""""""""""""
 let g:ale_sign_column_always = 1
-let g:ale_echo_msg_error_str = 'ERROR'
-let g:ale_echo_msg_warning_str = 'WARNING'
-let g:ale_statusline_format = ['[ERROR]%d', '[WARNING]%d', '']
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_echo_msg_error_str = nr2char(0xf421)
+let g:ale_echo_msg_warning_str = nr2char(0xf420)
+let g:ale_statusline_format = [g:ale_echo_msg_error_str.' %d', g:ale_echo_msg_warning_str.' %d', '']
+let g:ale_echo_msg_format = '%severity% %linter% - %s'
+let g:ale_sign_error = g:ale_echo_msg_error_str
+let g:ale_sign_warning = g:ale_echo_msg_warning_str
 let g:ale_linters = {
 \    'c' : ['clang'],
 \    'cpp' : ['clang'],
 \}
 nmap <silent><C-k> <Plug>(ale_previous_wrap)
 nmap <silent><C-j> <Plug>(ale_next_wrap)
+highlight link ALEErrorSign ErrorMsg
+highlight link ALEWarningSign MoreMsg
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""lightlineの設定"""""""""""""""""""""""""""""""""""
@@ -399,6 +403,8 @@ let g:lightline = {
     \    'imstate' : 'LightLineIMStatus',
     \    'fugitive' : 'LightLineFugitive',
     \    'filename' : 'LightLineFilename',
+    \    'filetype' : 'LightLineFileType',
+    \    'fileformat' : 'LightLineFileFormat',
     \},
     \ 'component_expand' : {
     \    'ale_error' : 'ALEGetError',
@@ -408,12 +414,12 @@ let g:lightline = {
     \    'ale_error' : 'error',
     \    'ale_warning' : 'warning',
     \},
-    \ 'separator': { 'left': '⮀', 'right': '⮂' },
-    \ 'subseparator': { 'left': '⮁', 'right': '⮃' },
+    \ 'separator': { 'left': nr2char(0xe0b0), 'right': nr2char(0xe0b2) },
+    \ 'subseparator': { 'left': nr2char(0xe0b1), 'right': nr2char(0xe0b3) },
 \}
 
 function! LightLineIMStatus()
-    return IMStatus('JpFixMode')
+    return IMStatus('JpFix')
 endfunction
 
 function! LightLineFugitive()
@@ -422,7 +428,7 @@ function! LightLineFugitive()
         return &ft == 'unite' ? '' :
         \ &ft == 'vimfiler' ? '' :
         \ &ft == 'vimshell' ? '' :
-        \ branch != '' ? '⭠ '.branch : ''
+        \ branch != '' ? nr2char(0xe0a0).' '.branch : ''
     endif
     return ''
 endfunction
@@ -450,6 +456,14 @@ function! ALEGetWarning()
     let l:buffer = bufnr('%')
     let l:warning_count = ale#statusline#Count(l:buffer)['warning']
     return l:warning_count == 0 ? '' : printf(g:ale_statusline_format[1], l:warning_count)
+endfunction
+
+function! LightLineFileType()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype .' '. WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! LightLineFileFormat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 augroup LightLineOneALE
