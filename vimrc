@@ -711,6 +711,7 @@ function! s:Compile()
     let l:current_directory = expand("%:p:h")
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
+    let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
     if bufnr('[vimshell] - terminal') == -1
         execute(':VimShellPop -buffer-name=terminal')
     endif
@@ -719,18 +720,23 @@ function! s:Compile()
             execute(':VimShellPop -buffer-name=terminal')
         endif
     endif
-    if e == "c"
-        call vimshell#interactive#send('gcc '.l:filename_ext.' -o '.l:filename.'.out -lm')
-    endif
-    if e == "cc" || e == "cpp"
-        call vimshell#interactive#send('g++ '.l:filename_ext.' -o '.l:filename.'.out -lm')
-    endif
-    if e == "f90" || e == "f95" || e == "f03"
-        call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
-    endif
-    if e == "tex"
-        call vimshell#interactive#send('cd '.l:current_directory)
-        call vimshell#interactive#send('latexmk '.l:filename_ext)
+    if strlen(l:makefile)
+        call vimshell#interactive#send('cd ~/'.fnamemodify(l:makefile, ':h'))
+        call vimshell#interactive#send('make')
+    else
+        if e == "c"
+            call vimshell#interactive#send('gcc '.l:filename_ext.' -o '.l:filename.'.out -lm')
+        endif
+        if e == "cc" || e == "cpp"
+            call vimshell#interactive#send('g++ '.l:filename_ext.' -o '.l:filename.'.out -lm')
+        endif
+        if e == "f90" || e == "f95" || e == "f03"
+            call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
+        endif
+        if e == "tex"
+            call vimshell#interactive#send('cd '.l:current_directory)
+            call vimshell#interactive#send('latexmk '.l:filename_ext)
+        endif
     endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -767,26 +773,3 @@ function! s:Go()
     endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""makeコマンド"""""""""""""""""""""""""""""
-command! Make call s:Make()
-nnoremap <silent> <F5> :Make<CR>
-function! s:Make()
-    if exists('g:makefile_directory')
-        if isdirectory(g:makefile_directory)
-            if bufnr('[vimshell] - terminal') == -1
-                execute(':VimShellPop -buffer-name=terminal')
-            endif
-            if v:version >= 800
-                if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
-                    execute(':VimShellPop -buffer-name=terminal')
-                endif
-            endif
-            call vimshell#interactive#send('cd '.g:makefile_directory)
-            call vimshell#interactive#send('make')
-        else
-            echo 'Directory "'.g:makefile_directory.'" is not found.'
-        endif
-    endif
-endfunction
-""""""""""""""""""""""""""""""""""""""""""""""""""""""
