@@ -706,7 +706,7 @@ function! s:Compile()
         endif
     endif
     if strlen(l:makefile)
-        call vimshell#interactive#send('cd '.fnamemodify(l:makefile, ':p:h'))
+        execute(':VimShellPop '.fnamemodify(l:makefile, ':p:h'))
         call vimshell#interactive#send('make')
     else
         if e == "c"
@@ -719,7 +719,7 @@ function! s:Compile()
             call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
         endif
         if e == "tex"
-            call vimshell#interactive#send('cd '.l:current_directory)
+            execute(':VimShellPop '.fnamemodify(l:current_directory, ':p:h'))
             call vimshell#interactive#send('latexmk '.l:filename_ext)
         endif
     endif
@@ -744,7 +744,7 @@ function! s:Go()
     endif
     if strlen(l:makefile)
         if exists('g:make_go_command')
-            call vimshell#interactive#send('cd '.fnamemodify(l:makefile, ':p:h'))
+            execute(':VimShellPop '.fnamemodify(l:makefile, ':p:h'))
             call vimshell#interactive#send(g:make_go_command)
         endif
     else
