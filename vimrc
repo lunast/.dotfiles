@@ -518,14 +518,18 @@ au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocal=1
 """"""""""""""""VimShellの設定""""""""""""""""""""""
 "PopupでVimShellを開く
 nnoremap <silent><space>s :<C-u>VimShellPop -buffer-name=terminal<CR>
+
 "動的プロンプトを適用
 let g:vimshell_prompt_expr =
 \ 'escape(fnamemodify(getcwd(), ":~")."$", "\\[]()?! ")." "'
 let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+$ '
+
 "VimShellの高さを調整
 let g:vimshell_popup_height = '25'
+
 "normalモードでvimShellを開く
 let g:vimshell_enable_start_insert = 0
+
 "デフォルトのキーマッピングを変更
 augroup vimshell
     autocmd!
@@ -534,11 +538,28 @@ augroup END
 function! s:vimshell_my_settings()
     inoremap <buffer><c-l> <Esc>zta
 endfunction
+
 "バッファのカレントディレクトリに移動
 command! ChCurrentDir call s:CdCurrentDir()
 nnoremap <silent><F4> :<C-u>ChCurrentDir<CR>
 function! s:CdCurrentDir()
-    call vimshell#interactive#send('cd '.expand("%:p:h"))
+    let l:vimshell_bufnr = GetVimShellBufnr()
+    if l:vimshell_bufnr < 0 || getbufinfo(l:vimshell_bufnr)['']['hidden'] == 1
+        execute(':VimShellPop -buffer-name=terminal '.expand('%:p:h'))
+    else
+        execute(':VimShellPop '.expand('%:p:h'))
+    endif
+endfunction
+
+"vimshellのバッファ番号を取得
+function! GetVimShellBufnr()
+    for bufnum in range(1, bufnr('$'))
+        let l:ft = getbufvar(bufnum, '&filetype')
+        if l:ft == 'vimshell'
+            return bufnum
+        endif
+    endfor
+    return -1
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -697,13 +718,9 @@ function! s:Compile()
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
     let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
-    if bufnr('[vimshell] - terminal') == -1
+    let l:vimshell_bufnr = GetVimShellBufnr()
+    if l:vimshell_bufnr < 0 || getbufinfo(l:vimshell_bufnr)['']['hidden'] == 1
         execute(':VimShellPop -buffer-name=terminal')
-    endif
-    if v:version >= 800
-        if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
-            execute(':VimShellPop -buffer-name=terminal')
-        endif
     endif
     if strlen(l:makefile)
         execute(':VimShellPop '.fnamemodify(l:makefile, ':p:h'))
@@ -734,13 +751,9 @@ function! s:Go()
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
     let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
-    if bufnr('[vimshell] - terminal') == -1
+    let l:vimshell_bufnr = GetVimShellBufnr()
+    if l:vimshell_bufnr < 0 || getbufinfo(l:vimshell_bufnr)['']['hidden'] == 1
         execute(':VimShellPop -buffer-name=terminal')
-    endif
-    if v:version >= 800
-        if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
-            execute(':VimShellPop -buffer-name=terminal')
-        endif
     endif
     if strlen(l:makefile)
         if exists('g:make_go_command')
