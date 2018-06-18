@@ -705,7 +705,7 @@ function! s:Compile()
         endif
     endif
     if strlen(l:makefile)
-        call vimshell#interactive#send('cd ~/'.fnamemodify(l:makefile, ':h'))
+        call vimshell#interactive#send('cd '.fnamemodify(l:makefile, ':p:h'))
         call vimshell#interactive#send('make')
     else
         if e == "c"
@@ -743,7 +743,7 @@ function! s:Go()
     endif
     if strlen(l:makefile)
         if exists('g:make_go_command')
-            call vimshell#interactive#send('cd ~/'.fnamemodify(l:makefile, ':h'))
+            call vimshell#interactive#send('cd '.fnamemodify(l:makefile, ':p:h'))
             call vimshell#interactive#send(g:make_go_command)
         endif
     else
