@@ -767,3 +767,26 @@ function! s:Go()
     endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""makeコマンド"""""""""""""""""""""""""""""
+command! Make call s:Make()
+nnoremap <silent> <F5> :Make<CR>
+function! s:Make()
+    if exists('g:makefile_directory')
+        if isdirectory(g:makefile_directory)
+            if bufnr('[vimshell] - terminal') == -1
+                execute(':VimShellPop -buffer-name=terminal')
+            endif
+            if v:version >= 800
+                if getbufinfo('[vimshell] - terminal')['']['hidden'] == 1
+                    execute(':VimShellPop -buffer-name=terminal')
+                endif
+            endif
+            call vimshell#interactive#send('cd '.g:makefile_directory)
+            call vimshell#interactive#send('make')
+        else
+            echo 'Directory "'.g:makefile_directory.'" is not found.'
+        endif
+    endif
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
