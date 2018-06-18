@@ -242,34 +242,6 @@ set fileformats=unix,dos,mac
 let fortran_free_source=1
 let fortran_fold=1
 au! BufRead,BufNewFile *.f90,*f03 let b:fortran_do_enddo=1
-"モジュールファイルの出力先を指定する変数，デフォルトはバッファのカレントディレクトリ
-let g:fortran_module_directory="%:p:h"
-au! BufRead,BufNewFile,BufWritePre *.f90,*f03 call CdModDir()
-"g:fortran_module_directoryの値を書き換え，そのディレクトリに移動するコマンド
-"指定したディレクトリが存在しない場合はそのディレクトリを作成する
-command! -nargs=1 ChModDir call ChModDir(<f-args>)
-function! ChModDir(dir)
-    let cursor=getpos(".")
-    let g:fortran_module_directory=a:dir
-    let l:is_directory_flag=isdirectory(expand(g:fortran_module_directory))
-    if l:is_directory_flag != 1
-        execute(mkdir(expand(g:fortran_module_directory)))
-    endif
-    execute('cd '.expand(g:fortran_module_directory))
-    call setpos(".", cursor)
-    unlet cursor
-    if l:is_directory_flag != 1
-        execute('echo "mkdir -p '.expand(g:fortran_module_directory).'"')
-    endif
-endfunction
-"g:fortran_module_directoryで指定されたディレクトリに移動する関数
-"指定したディレクトリが存在しない場合はそのディレクトリを作成する
-function! CdModDir() abort
-    if isdirectory(expand(g:fortran_module_directory)) != 1
-        execute(mkdir(expand(g:fortran_module_directory)))
-    endif
-    execute('cd '.expand(g:fortran_module_directory))
-endfunction
 
 "tex用の設定
 let g:tex_flavor = "latex"
