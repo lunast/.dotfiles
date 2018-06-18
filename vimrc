@@ -760,6 +760,7 @@ function! s:Go()
     let e = expand("%:e")
     let l:filename_ext = expand("%:p")
     let l:filename = expand("%:p:r")
+    let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
     if bufnr('[vimshell] - terminal') == -1
         execute(':VimShellPop -buffer-name=terminal')
     endif
@@ -768,20 +769,27 @@ function! s:Go()
             execute(':VimShellPop -buffer-name=terminal')
         endif
     endif
-    if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95" || e == "f03"
-        call vimshell#interactive#send(l:filename.'.out')
-    endif
-    if e == "py"
-        call vimshell#interactive#send('python '.l:filename_ext)
-    endif
-    if e == "lua"
-        call vimshell#interactive#send('lua '.l:filename_ext)
-    endif
-    if e == "rb"
-        call vimshell#interactive#send('ruby '.l:filename_ext)
-    endif
-    if e == "htm" || e == "html"
-        call vimproc#open(expand("%:p"))
+    if strlen(l:makefile)
+        if exists('g:make_go_command')
+            call vimshell#interactive#send('cd ~/'.fnamemodify(l:makefile, ':h'))
+            call vimshell#interactive#send(g:make_go_command)
+        endif
+    else
+        if e == "c" || e == "cc" || e == "cpp" || e == "f" || e == "f90" || e == "f95" || e == "f03"
+            call vimshell#interactive#send(l:filename.'.out')
+        endif
+        if e == "py"
+            call vimshell#interactive#send('python '.l:filename_ext)
+        endif
+        if e == "lua"
+            call vimshell#interactive#send('lua '.l:filename_ext)
+        endif
+        if e == "rb"
+            call vimshell#interactive#send('ruby '.l:filename_ext)
+        endif
+        if e == "htm" || e == "html"
+            call vimproc#open(expand("%:p"))
+        endif
     endif
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""
