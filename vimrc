@@ -372,14 +372,14 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""aleの設定"""""""""""""""""""""""""""""""""""""""""
-let g:ale_sign_column_always = 1
-let g:ale_echo_msg_error_str = nr2char(0xf421)
+let g:ale_sign_column_always   = 1
+let g:ale_echo_msg_error_str   = nr2char(0xf421)
 let g:ale_echo_msg_warning_str = nr2char(0xf420)
-let g:ale_statusline_format = [g:ale_echo_msg_error_str.' %d', g:ale_echo_msg_warning_str.' %d', '']
-let g:ale_echo_msg_format = '%severity% %linter% - %s'
-let g:ale_sign_error = g:ale_echo_msg_error_str
-let g:ale_sign_warning = g:ale_echo_msg_warning_str
-let g:ale_linters = {
+let g:ale_statusline_format    = [g:ale_echo_msg_error_str.' %d', g:ale_echo_msg_warning_str.' %d', '']
+let g:ale_echo_msg_format      = '%severity% %linter% - %s'
+let g:ale_sign_error           = g:ale_echo_msg_error_str
+let g:ale_sign_warning         = g:ale_echo_msg_warning_str
+let g:ale_linters              = {
 \    'c' : ['clang'],
 \    'cpp' : ['clang'],
 \}
@@ -459,11 +459,11 @@ function! ALEGetWarning()
 endfunction
 
 function! LightLineFileType()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype .' '. WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+  return strlen(&filetype) ? &filetype.' '.WebDevIconsGetFileTypeSymbol() : 'no ft'
 endfunction
 
 function! LightLineFileFormat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+  return &fileformat.' '.WebDevIconsGetFileFormatSymbol()
 endfunction
 
 augroup LightLineOneALE
