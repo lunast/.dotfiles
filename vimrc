@@ -85,7 +85,7 @@ syntax on
 colorscheme molokai
 set t_Co=256
 
-"ファイルタイプを認識しないバグの回避
+"ファイルタイプを認識しないバクの回避
 setf text
 if !did_filetype()
   setlocal filetype=
@@ -509,7 +509,7 @@ vmap <Enter> <Plug>(EasyAlign)
 " fcitx
 let IM_CtrlMode = 6
 " 「日本語入力固定モード」切替キー
-inoremap <silent> <C-a> <C-r>=IMState('FixMode')<CR>
+inoremap <silent><C-a> <C-r>=IMState('FixMode')<CR>
 set timeout timeoutlen=3000 ttimeoutlen=100
 "ファイルがunite,vimshell,vimfilerの場合、日本語入力固定モードを個別制御
 au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocal=1
@@ -565,10 +565,10 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 let g:toggle_caps_lock=0
-command! ToggleCapsLock call s:ToggleCapsLock()
+command! ToggleCapsLock call ToggleCapsLock()
 nnoremap <silent><space>tc :<C-u>ToggleCapsLock<CR>
-inoremap <silent><C-c> <Esc>:<C-u>ToggleCapsLock<CR>a
-function! s:ToggleCapsLock()
+inoremap <silent><C-c> <C-r>=ToggleCapsLock()<CR>
+function! ToggleCapsLock()
     if g:toggle_caps_lock == 0
         " 小文字->大文字
         inoremap a A
@@ -684,6 +684,7 @@ function! s:ToggleCapsLock()
         let g:toggle_caps_lock=0
         echo 'Caps Lock:OFF'
     endif
+    return ''
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
