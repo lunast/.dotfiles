@@ -50,6 +50,7 @@ call dein#add('Yggdroot/indentLine', {'on_path' : '.*'})
 call dein#add('cohama/lexima.vim', {'on_i': 1})
 call dein#add('Shougo/neocomplete.vim', {'on_i': 1})
 call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('skywind3000/asyncrun.vim')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call dein#end()
 "プラグインのインストールを確認
@@ -62,7 +63,7 @@ endif
 "Ubuntuなら
 "sudo apt-get install cmigemo
 "Archなら
-"AURからnkfとcmigemo-gitをダウンロードしてmakepkg
+"AURからnkfとcmigemo-gitをダウンロードしてインストール
 
 "vimfilerでゴミ箱を利用するためにtrashcliが必要
 "Ubuntuなら
@@ -75,6 +76,15 @@ endif
 "sudo apt-get install xdotool
 "Archなら
 "sudo pacman -S xdotool
+
+"タグジャンプを利用するためにctagsが必要
+"Ubuntuなら
+"sudo apt-get install ctags
+"Archなら
+"sudo pacman -S ctags
+
+"lightlineのセパレータ等にnead-fontsを使用している
+"そのため，nead-fontsが表示できるフォントを設定する必要あり
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 "vimのhelpを日本語で開く
@@ -253,6 +263,34 @@ noremap <expr> N <SID>search_forward_p() ? 'Nzv' : 'nzv'
 function! s:search_forward_p()
     return exists('v:searchforward') ? v:searchforward : 1
 endfunction
+
+"""""""""""""""タグの設定"""""""""""""""""""""
+nnoremap <C-]> g<C-]>
+set tags=$HOME/.tags
+
+augroup AutoGenCtags
+autocmd!
+autocmd BufWritePost *.c,*.cpp,*.f,*.f90,*.py call s:GenCtags()
+augroup END
+
+function! s:GenCtags()
+    let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
+    let l:filetype = &filetype
+
+    if l:filetype == 'cpp'
+        let l:filetype = 'c++'
+    endif
+
+    if strlen(l:makefile)
+        let l:output_dir = fnamemodify(l:makefile, ':p:h')
+    else
+        let l:output_dir = expand('%:p:h')
+    endif
+
+    let l:ctags_cmd = 'cd '.l:output_dir.' && ctags --language='.l:filetype.' -f '.&tags.' `pwd`'
+    call execute(':AsyncRun '.l:ctags_cmd)
+endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""better-whitespaceの設定"""""""""""""""
 let g:better_whitespace_filetypes_blacklist=
