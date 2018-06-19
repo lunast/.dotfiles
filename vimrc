@@ -461,11 +461,11 @@ endfunction
 
 function! LightLineModefied()
     if &modified
-        return " +"
+        return " ".nr2char(0xf8ea)
     elseif &modifiable
         return ""
     else
-        return " -"
+        return " ".nr2char(0xf023)
 endfunction
 
 function! ALEGetError()
