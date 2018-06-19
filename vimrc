@@ -43,9 +43,7 @@ call dein#add('tpope/vim-fugitive')
 call dein#add('w0rp/ale')
 call dein#add('ryanoasis/vim-devicons')
 call dein#add('ntpeters/vim-better-whitespace')
-call dein#add('mattn/emmet-vim')
 call dein#add('hail2u/vim-css3-syntax')
-call dein#add('lordm/vim-browser-reload-linux')
 call dein#add('Yggdroot/indentLine', {'on_path' : '.*'})
 call dein#add('cohama/lexima.vim', {'on_i': 1})
 call dein#add('Shougo/neocomplete.vim', {'on_i': 1})
@@ -70,12 +68,6 @@ endif
 "sudo apt-get install trash-cli
 "Archなら
 "sudo pacman -S trash-cli
-
-"browser-reload-linuxを利用するためにxdotoolが必要
-"Ubuntuなら
-"sudo apt-get install xdotool
-"Archなら
-"sudo pacman -S xdotool
 
 "タグジャンプを利用するためにctagsが必要
 "Ubuntuなら
@@ -355,22 +347,6 @@ nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-"""browser-reload-linuxの設定""""""""""""""""""""
-command! Chr ChromeReload
-command! Chstart ChromeReloadStart
-command! Chstop ChromeReloadStop
-au! BufRead,BufNewFile *htm,*html execute(':Chstart')
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""emmet-vimの設定"""""""""""""""""""""""
-let g:user_emmet_settings = {
-    \ 'variables':{
-    \ 'lang':"ja"
-    \},
-    \ 'indentation':'  '
-\}
-""""""""""""""""""""""""""""""""""""""""""""""""""
-
 """"""""""""スニペットの設定"""""""""""""""""""""""""""""""""
 " Plugin key-mappings.
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -517,16 +493,6 @@ augroup vimfiler
 augroup END
 function! s:vimfiler_my_settings()
     nnoremap <buffer><S-l> <C-w>l
-endfunction
-
-"VimFilerでリモートのファイルをIDE風に開くためのコマンド
-command! -nargs=1 SshFilerTree call SshFilerTree(<f-args>)
-function! SshFilerTree(host)
-    if bufnr('vimfiler:explorer') != -1
-        execute ':bw vimfiler:explorer'
-    endif
-    let l:vimfiler_options = '-split -simple -winwidth=30 -no-quit -buffer-name=explorer ssh://'.a:host.'/'
-    execute ':VimFiler '.l:vimfiler_options
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
