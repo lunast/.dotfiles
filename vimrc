@@ -128,7 +128,7 @@ if has('clipboard')
 endif
 
 "括弧のハイライトの色
-hi MatchParen ctermfg = darkred ctermbg = grey
+hi MatchParen ctermfg = grey ctermbg = darkred
 
 "タブの設定
 set expandtab
