@@ -293,7 +293,10 @@ nnoremap <space>ds :StripWhitespace<CR>
 """""""""""fugitiveの設定""""""""""""""""""""""""
 nnoremap <silent><space>gs :<C-u>Gstatus<CR>
 nnoremap <silent><space>gw :<C-u>Gwrite<CR>
-nnoremap <silent><space>gr :<C-u>Gread<CR>
+nnoremap <silent><space>gr :<C-u>Grm<CR>
+nnoremap <silent><space>gc :<C-u>Gcommit<CR>
+nnoremap <silent><space>gd :<C-u>Gdiff<CR>
+nnoremap <silent><space>gb :<C-u>Gblame<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""easymotionの設定""""""""""""""""""""""
