@@ -571,147 +571,46 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""句読点の変換を切り替えるtoggle""""""""""""""
-let g:toggle_conv_punc=1
-inoremap 、 ，
-inoremap 。 ．
-command! ToggleConvPunc call s:ToggleConvPunc()
+let g:toggle_conv_punc = 0
+command! ToggleConvPunc call ToggleConvPunc()
 nnoremap <silent><space>tp :<C-u>ToggleConvPunc<CR>
-function! s:ToggleConvPunc()
+function! ToggleConvPunc()
     if g:toggle_conv_punc == 0
         inoremap 、 ，
         inoremap 。 ．
-        let g:toggle_conv_punc=1
-        echo 'Convert:ON'
+        let g:toggle_conv_punc = 1
+        echo 'Convert : ON'
     else
         inoremap 、 、
         inoremap 。 。
-        let g:toggle_conv_punc=0
-        echo 'Convert:OFF'
+        let g:toggle_conv_punc = 0
+        echo 'Convert : OFF'
     endif
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:toggle_caps_lock=0
+""""""""""CapsLock""""""""""""""""""""""""""""""""""
+let g:toggle_caps_lock = 0
 command! ToggleCapsLock call ToggleCapsLock()
 nnoremap <silent><space>tc :<C-u>ToggleCapsLock<CR>
 inoremap <silent><C-c> <C-r>=ToggleCapsLock()<CR>
 function! ToggleCapsLock()
     if g:toggle_caps_lock == 0
-        " 小文字->大文字
-        inoremap a A
-        inoremap b B
-        inoremap c C
-        inoremap d D
-        inoremap e E
-        inoremap f F
-        inoremap g G
-        inoremap h H
-        inoremap i I
-        inoremap j J
-        inoremap k K
-        inoremap l L
-        inoremap m M
-        inoremap n N
-        inoremap o O
-        inoremap p P
-        inoremap q Q
-        inoremap r R
-        inoremap s S
-        inoremap t T
-        inoremap u U
-        inoremap v V
-        inoremap w W
-        inoremap x X
-        inoremap y Y
-        inoremap z Z
-        " 大文字->小文字
-        inoremap A a
-        inoremap B b
-        inoremap C c
-        inoremap D d
-        inoremap E e
-        inoremap F f
-        inoremap G g
-        inoremap H h
-        inoremap I i
-        inoremap J j
-        inoremap K k
-        inoremap L l
-        inoremap M m
-        inoremap N n
-        inoremap O o
-        inoremap P p
-        inoremap Q q
-        inoremap R r
-        inoremap S s
-        inoremap T t
-        inoremap U u
-        inoremap V v
-        inoremap W w
-        inoremap X x
-        inoremap Y y
-        inoremap Z z
-        let g:toggle_caps_lock=1
-        echo 'Caps Lock:ON'
+        for i in range(char2nr('A'), char2nr('Z'))
+            execute 'inoremap '.nr2char(i+32).' '.nr2char(i)
+            execute 'inoremap '.nr2char(i).' '.nr2char(i+32)
+        endfor
+        let g:toggle_caps_lock = 1
+        echo 'Caps Lock : ON'
     else
-        " 小文字->小文字
-        inoremap a a
-        inoremap b b
-        inoremap c c
-        inoremap d d
-        inoremap e e
-        inoremap f f
-        inoremap g g
-        inoremap h h
-        inoremap i i
-        inoremap j j
-        inoremap k k
-        inoremap l l
-        inoremap m m
-        inoremap n n
-        inoremap o o
-        inoremap p p
-        inoremap q q
-        inoremap r r
-        inoremap s s
-        inoremap t t
-        inoremap u u
-        inoremap v v
-        inoremap w w
-        inoremap x x
-        inoremap y y
-        inoremap z z
-        " 大文字->大文字
-        inoremap A A
-        inoremap B B
-        inoremap C C
-        inoremap D D
-        inoremap E E
-        inoremap F F
-        inoremap G G
-        inoremap H H
-        inoremap I I
-        inoremap J J
-        inoremap K K
-        inoremap L L
-        inoremap M M
-        inoremap N N
-        inoremap O O
-        inoremap P P
-        inoremap Q Q
-        inoremap R R
-        inoremap S S
-        inoremap T T
-        inoremap U U
-        inoremap V V
-        inoremap W W
-        inoremap X X
-        inoremap Y Y
-        inoremap Z Z
-        let g:toggle_caps_lock=0
-        echo 'Caps Lock:OFF'
+        for i in range(char2nr('A'), char2nr('Z'))
+            execute 'inoremap '.nr2char(i).' '.nr2char(i)
+            execute 'inoremap '.nr2char(i+32).' '.nr2char(i+32)
+        endfor
+        let g:toggle_caps_lock = 0
+        echo 'Caps Lock : OFF'
     endif
+
     return ''
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
