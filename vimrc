@@ -571,43 +571,43 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""句読点の変換を切り替えるtoggle""""""""""""""
-let g:toggle_conv_punc = 0
+let s:toggle_conv_punc = 0
 command! ToggleConvPunc call ToggleConvPunc()
 nnoremap <silent><space>tp :<C-u>ToggleConvPunc<CR>
 function! ToggleConvPunc()
-    if g:toggle_conv_punc == 0
+    if s:toggle_conv_punc == 0
         inoremap 、 ，
         inoremap 。 ．
-        let g:toggle_conv_punc = 1
+        let s:toggle_conv_punc = 1
         echo 'Convert : ON'
     else
         inoremap 、 、
         inoremap 。 。
-        let g:toggle_conv_punc = 0
+        let s:toggle_conv_punc = 0
         echo 'Convert : OFF'
     endif
 endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""CapsLock""""""""""""""""""""""""""""""""""
-let g:toggle_caps_lock = 0
+let s:toggle_caps_lock = 0
 command! ToggleCapsLock call ToggleCapsLock()
 nnoremap <silent><space>tc :<C-u>ToggleCapsLock<CR>
 inoremap <silent><C-c> <C-r>=ToggleCapsLock()<CR>
 function! ToggleCapsLock()
-    if g:toggle_caps_lock == 0
+    if s:toggle_caps_lock == 0
         for i in range(char2nr('A'), char2nr('Z'))
             execute 'inoremap '.nr2char(i+32).' '.nr2char(i)
             execute 'inoremap '.nr2char(i).' '.nr2char(i+32)
         endfor
-        let g:toggle_caps_lock = 1
+        let s:toggle_caps_lock = 1
         echo 'Caps Lock : ON'
     else
         for i in range(char2nr('A'), char2nr('Z'))
             execute 'inoremap '.nr2char(i).' '.nr2char(i)
             execute 'inoremap '.nr2char(i+32).' '.nr2char(i+32)
         endfor
-        let g:toggle_caps_lock = 0
+        let s:toggle_caps_lock = 0
         echo 'Caps Lock : OFF'
     endif
 
