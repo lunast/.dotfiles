@@ -6,12 +6,11 @@ export LANG=ja_JP.UTF-8  # 文字コードをUTF-8に設定
 export KCODE=u           # KCODEにUTF-8を設定
 export AUTOFEATURE=true  # autotestでfeatureを動かす
 
-bindkey -v              # キーバインドをviモードに設定
+bindkey -e              # キーバインドをemacsモードに設定
 
 setopt auto_pushd        # cd時にディレクトリスタックにpushdする
 setopt correct           # コマンドのスペルを訂正する
 setopt prompt_subst      # プロンプト定義内で変数置換やコマンド置換を扱う
-setopt notify            # バックグラウンドジョブの状態変化を即時報告する
 
 ### Complement ###
 autoload -U compinit; compinit # 補完機能を有効にする
@@ -90,3 +89,7 @@ precmd() {
 # ------------------------------
 alias history='history -E'
 alias vigenere='python2 ~/.dotfiles/python/vigenere.py'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
