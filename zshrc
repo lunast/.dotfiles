@@ -3,10 +3,8 @@
 # ------------------------------
 export EDITOR=vim        # エディタをvimに設定
 export LANG=ja_JP.UTF-8  # 文字コードをUTF-8に設定
-export KCODE=u           # KCODEにUTF-8を設定
-export AUTOFEATURE=true  # autotestでfeatureを動かす
 
-bindkey -e              # キーバインドをemacsモードに設定
+bindkey -e               # キーバインドをemacsモードに設定
 
 setopt auto_pushd        # cd時にディレクトリスタックにpushdする
 setopt correct           # コマンドのスペルを訂正する
@@ -18,7 +16,7 @@ setopt auto_list               # 補完候補を一覧で表示する(d)
 setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
 setopt list_packed             # 補完候補をできるだけ詰めて表示する
 setopt list_types              # 補完候補にファイルの種類も表示する
-bindkey "^[[Z" reverse-menu-complete  # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
+bindkey "^[[Z" reverse-menu-complete                # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を区別しない
 
 ### History ###
@@ -38,58 +36,50 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-# すべてのヒストリを表示する
-function history-all { history -E 1 }
-
 # ------------------------------
 # Look And Feel Settings
 # ------------------------------
-### Ls Color ###
-# 色の設定
-export LSCOLORS=Exfxcxdxbxegedabagacad
 # 補完時の色の設定
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# ZLS_COLORSとは？
-export ZLS_COLORS=$LS_COLORS
-# lsコマンド時、自動で色がつく(ls -Gのようなもの？)
-export CLICOLOR=true
+export LS_COLORS='di=38;5;33:ln=38;5;207:so=01;32:ex=38;5;82:bd=43;34:cd=38;5;208:su=41;30:sg=46;30:tw=48;5;27;38;5;0:ow=38;5;226'
 # 補完候補に色を付ける
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 ### Prompt ###
 # プロンプトに色を付ける
 autoload -U colors; colors
 # 一般ユーザ時
-tmp_prompt="%F{cyan}[%n@%D{%m/%d %T}]%f "
-tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
-tmp_rprompt="%{${fg[green]}%}[%~]%{${reset_color}%}"
-tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
+PROMPT="%F{051}%n@%m:%~$%f "
+RPROMPT=
+PROMPT2="%F{051}> %f"
+SPROMPT="%F{208}%r is correct? [Yes, No, Abort, Edit] %f"
 
-PROMPT=$tmp_prompt    # 通常のプロンプト
-PROMPT2=$tmp_prompt2  # セカンダリのプロンプト(コマンドが2行以上の時に表示される)
-RPROMPT=$tmp_rprompt  # 右側のプロンプト
-SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
 # SSHログイン時のプロンプト
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
   PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 ;
 
-#Title
-precmd() {
-    [[ -t 1 ]] || return
-    case $TERM in
-        *xterm*|rxvt|(dt|k|E)term)
-        print -Pn "\e]2;[%~]\a"
-	;;
-    esac
-}
-
-# ------------------------------
-# Other Settings
-# ------------------------------
 alias history='history -E'
 alias vigenere='python2 ~/.dotfiles/python/vigenere.py'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+
+# Ctrl+Rでrofiを実行する
+function _show_rofi() {
+    rofi -show > /dev/null 2>&1
+    zle reset-prompt
+}
+zle -N show_rofi _show_rofi
+bindkey '^R' show_rofi
+
+# 256色確認
+function pcolor() {
+    for ((f = 0; f < 255; f++)); do
+        printf "\e[38;5;%dm %3d*■\e[m" $f $f
+        if [[ $f%8 -eq 7 ]] then
+            printf "\n"
+        fi
+        done
+    echo
+}
