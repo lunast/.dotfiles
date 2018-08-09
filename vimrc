@@ -189,8 +189,12 @@ inoremap jk <Esc>
 inoremap ｊｋ <Esc>
 inoremap <C-f> <Right>
 inoremap <C-b> <Left>
+inoremap <C-a> <home>
+inoremap <C-e> <end>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
+cnoremap <C-a> <home>
+cnoremap <C-e> <end>
 nnoremap gs :<C-u>%s///g<Left><Left><Left>
 vnoremap gs :<C-u>'<,'>s///g<Left><Left><Left>
 vnoremap a ggoG$
@@ -516,7 +520,7 @@ vmap <Enter> <Plug>(EasyAlign)
 " fcitx
 let IM_CtrlMode = 6
 " 「日本語入力固定モード」切替キー
-inoremap <silent><C-a> <C-r>=IMState('FixMode')<CR>
+inoremap <silent><C-z> <C-r>=IMState('FixMode')<CR>
 set timeout timeoutlen=3000 ttimeoutlen=100
 "ファイルがunite,vimshell,vimfilerの場合、日本語入力固定モードを個別制御
 au! FileType unite,vimshell,vimfiler let b:IM_CtrlBufLocal=1
