@@ -65,14 +65,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# Ctrl+Rでrofiを実行する
-function _show_rofi() {
-    rofi -show > /dev/null 2>&1
-    zle reset-prompt
-}
-zle -N show_rofi _show_rofi
-bindkey '^R' show_rofi
-
 # 256色確認
 function pcolor() {
     for ((f = 0; f < 255; f++)); do
