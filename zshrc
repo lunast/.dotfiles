@@ -87,15 +87,15 @@ function rprompt-git-current-branch {
   elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
     # gitに管理されていないファイルがある状態
     branch_color="%F{009}"
-    branch_status=":?"
+    branch_status="?"
   elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
     # git addされていないファイルがある状態
     branch_color="%F{009}"
-    branch_status=":+"
+    branch_status="+"
   elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
     # git commitされていないファイルがある状態
     branch_color="%F{011}"
-    branch_status=":!"
+    branch_status="!"
   elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
     # コンフリクトが起こった状態
     echo "%F{009}!(no branch)"
@@ -105,7 +105,7 @@ function rprompt-git-current-branch {
     branch_status="%F{033}"
   fi
   # ブランチ名を色付きで表示する
-  echo "${branch_color}[${branch_name}${branch_status}]"
+  echo "${branch_color}${branch_status}[${branch_name}]"
 }
 
 # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
