@@ -11,11 +11,11 @@ setopt correct           # コマンドのスペルを訂正する
 setopt prompt_subst      # プロンプト定義内で変数置換やコマンド置換を扱う
 
 ### Complement ###
-autoload -U compinit; compinit # 補完機能を有効にする
-setopt auto_list               # 補完候補を一覧で表示する(d)
-setopt auto_menu               # 補完キー連打で補完候補を順に表示する(d)
-setopt list_packed             # 補完候補をできるだけ詰めて表示する
-setopt list_types              # 補完候補にファイルの種類も表示する
+autoload -U compinit; compinit                      # 補完機能を有効にする
+setopt auto_list                                    # 補完候補を一覧で表示する(d)
+setopt auto_menu                                    # 補完キー連打で補完候補を順に表示する(d)
+setopt list_packed                                  # 補完候補をできるだけ詰めて表示する
+setopt list_types                                   # 補完候補にファイルの種類も表示する
 bindkey "^[[Z" reverse-menu-complete                # Shift-Tabで補完候補を逆順する("\e[Z"でも動作する)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # 補完時に大文字小文字を区別しない
 
@@ -108,8 +108,6 @@ function rprompt-git-current-branch {
   echo "${branch_color}${branch_status}[${branch_name}]"
 }
 
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
 # プロンプトの右側(RPROMPT)にメソッドの結果を表示させる
 RPROMPT='`rprompt-git-current-branch`'
 
