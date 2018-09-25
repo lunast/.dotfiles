@@ -74,10 +74,9 @@ alias egrep='egrep --color=auto'
 function rprompt-git-current-branch {
   local branch_name st branch_status branch_color
 
-  if [ ! -e  ".git" ]; then
-    # gitで管理されていないディレクトリは何も返さない
-    return
-  fi
+  # gitで管理されていないディレクトリは何も返さない
+  git status > /dev/null 2>&1 || return
+
   branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
   st=`git status 2> /dev/null`
   if [[ -n `echo "$st" | grep "^nothing to"` ]]; then

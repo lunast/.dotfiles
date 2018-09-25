@@ -644,6 +644,10 @@ function! s:Compile()
         if e == "f90" || e == "f95" || e == "f03"
             call vimshell#interactive#send('gfortran '.l:filename_ext.' -o '.l:filename.'.out')
         endif
+        if e == "gp"
+            execute(':VimShellPop '.fnamemodify(l:current_directory, ':p:h'))
+            call vimshell#interactive#send('gnuplot '.l:filename_ext)
+        endif
         if e == "tex"
             execute(':VimShellPop '.fnamemodify(l:current_directory, ':p:h'))
             call vimshell#interactive#send('latexmk '.l:filename_ext)
