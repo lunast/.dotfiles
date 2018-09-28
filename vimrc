@@ -387,6 +387,7 @@ let g:ale_linters              = {
 \    'c' : ['clang'],
 \    'cpp' : ['clang'],
 \}
+let g:ale_tex_chktex_options="-n 8"
 nmap <silent><C-k> <Plug>(ale_previous_wrap)
 nmap <silent><C-j> <Plug>(ale_next_wrap)
 highlight link ALEErrorSign ErrorMsg
@@ -628,9 +629,11 @@ function! s:Compile()
     let l:filename = expand("%:p:r")
     let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
     let l:vimshell_bufnr = GetVimShellBufnr()
+
     if l:vimshell_bufnr < 0 || getbufinfo(l:vimshell_bufnr)['']['hidden'] == 1
         execute(':VimShellPop -buffer-name=terminal')
     endif
+
     if strlen(l:makefile)
         execute(':VimShellPop '.fnamemodify(l:makefile, ':p:h'))
         call vimshell#interactive#send('make')
@@ -665,9 +668,20 @@ function! s:Go()
     let l:filename = expand("%:p:r")
     let l:makefile = findfile('Makefile', escape(expand('%:p:h'), ' ').';')
     let l:vimshell_bufnr = GetVimShellBufnr()
+
+    if e == "htm" || e == "html"
+        call vimproc#open(expand("%:p"))
+        return
+    endif
+    if e == "gp"
+        call vimproc#open(l:filename.'.pdf')
+        return
+    endif
+
     if l:vimshell_bufnr < 0 || getbufinfo(l:vimshell_bufnr)['']['hidden'] == 1
         execute(':VimShellPop -buffer-name=terminal')
     endif
+
     if strlen(l:makefile)
         if exists('g:make_go_command')
             execute(':VimShellPop '.fnamemodify(l:makefile, ':p:h'))
@@ -685,9 +699,6 @@ function! s:Go()
         endif
         if e == "rb"
             call vimshell#interactive#send('ruby '.l:filename_ext)
-        endif
-        if e == "htm" || e == "html"
-            call vimproc#open(expand("%:p"))
         endif
     endif
 endfunction
