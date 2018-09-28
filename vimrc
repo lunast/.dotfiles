@@ -487,6 +487,8 @@ nnoremap <silent> <space>y :<C-u>Unite -buffer-name=yankround history/yank<CR>
 """"""""""""""vimfilerの設定""""""""""""""""""""""""
 "vimデフォルトのエクスプローラをvimfilerで置き換える
 let g:vimfiler_as_default_explorer=1
+"safeモードをデフォルトでオフにする
+let g:vimfiler_safe_mode_by_default=0
 "vimfilerにステータスラインを上書きさせない
 let g:vimfiler_force_overwrite_statusline=0
 "現在開いているバッファのディレクトリを開く
