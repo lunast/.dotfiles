@@ -675,7 +675,7 @@ function! s:Go()
         call vimproc#open(expand("%:p"))
         return
     endif
-    if e == "gp"
+    if e == "gp" || e == "tex"
         call vimproc#open(l:filename.'.pdf')
         return
     endif
